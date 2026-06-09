@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Найди цвет и форму</title>
+  <style>
+    :root {
+      --cream: #fff7df;
+      --sky: #dff6ff;
+      --mint: #dff8e9;
+      --text: #40352c;
+      --brown: #8b5e34;
+      --shadow: rgba(80, 54, 30, 0.16);
+      --good: #5ecb81;
+      --wrong: #ffb25f;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: "Arial Rounded MT Bold", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 12%, rgba(255,255,255,0.95) 0 42px, transparent 43px),
+        radial-gradient(circle at 88% 18%, rgba(255,255,255,0.85) 0 36px, transparent 37px),
+        linear-gradient(180deg, #fff4cc 0%, #e5f8ff 48%, #dff8e9 100%);
+    }
+
+    .decor {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .cloud {
+      position: absolute;
+      width: 130px;
+      height: 46px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      filter: drop-shadow(0 8px 12px rgba(255,255,255,0.35));
+    }
+
+    .cloud::before,
+    .cloud::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.72);
+    }
+
+    .cloud::before {
+      width: 60px;
+      height: 60px;
+      left: 22px;
+      top: -28px;
+    }
+
+    .cloud::after {
+      width: 50px;
+      height: 50px;
+      right: 22px;
+      top: -18px;
+    }
+
+    .cloud.one { top: 46px; left: -38px; transform: rotate(-3deg); }
+    .cloud.two { top: 100px; right: -52px; transform: scale(0.9) rotate(4deg); }
+
+    .flower {
+      position: absolute;
+      font-size: 32px;
+      opacity: 0.7;
+      animation: floaty 4.5s ease-in-out infinite;
+    }
+
+    .flower.f1 { left: 18px; bottom: 82px; }
+    .flower.f2 { right: 24px; bottom: 122px; animation-delay: 1.2s; }
+    .flower.f3 { left: 50%; bottom: 35px; animation-delay: 0.6s; }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-7px) rotate(3deg); }
+    }
+
+    .game {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 20px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    .header-card {
+      position: relative;
+      margin-top: 6px;
+      padding: 18px 16px 20px;
+      border-radius: 34px;
+      background: rgba(255,255,255,0.72);
+      box-shadow: 0 14px 28px var(--shadow);
+      backdrop-filter: blur(8px);
+      border: 3px solid rgba(255,255,255,0.9);
+    }
+
+    .mascot {
+      width: 86px;
+      height: 86px;
+      margin: 0 auto 8px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #f6d7a9, #e9b77c);
+      box-shadow: inset 0 -8px 0 rgba(139, 94, 52, 0.12), 0 8px 16px var(--shadow);
+      position: relative;
+    }
+
+    .mascot::before,
+    .mascot::after {
+      content: "";
+      position: absolute;
+      width: 23px;
+      height: 23px;
+      border-radius: 50%;
+      background: #f6d7a9;
+      top: -5px;
+      border: 5px solid #e4ae73;
+    }
+
+    .mascot::before { left: 8px; }
+    .mascot::after { right: 8px; }
+
+    .face {
+      position: absolute;
+      inset: 0;
+    }
+
+    .eye {
+      position: absolute;
+      width: 10px;
+      height: 13px;
+      border-radius: 50%;
+      background: #3c2c23;
+      top: 37px;
+    }
+
+    .eye.left { left: 29px; }
+    .eye.right { right: 29px; }
+
+    .nose {
+      position: absolute;
+      width: 12px;
+      height: 9px;
+      border-radius: 50%;
+      background: #7a4b2e;
+      left: 50%;
+      top: 50px;
+      transform: translateX(-50%);
+    }
+
+    .smile {
+      position: absolute;
+      width: 22px;
+      height: 12px;
+      border-bottom: 4px solid #7a4b2e;
+      border-radius: 0 0 22px 22px;
+      left: 50%;
+      top: 55px;
+      transform: translateX(-50%);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 26px;
+      line-height: 1.1;
+      letter-spacing: 0.2px;
+    }
+
+    .task {
+      display: inline-block;
+      max-width: 100%;
+      padding: 13px 16px;
+      border-radius: 24px;
+      background: #fff1b9;
+      border: 3px solid #ffffff;
+      box-shadow: inset 0 -5px 0 rgba(229, 170, 32, 0.18);
+      font-size: 25px;
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin: 18px 0 12px;
+    }
+
+    .card {
+      position: relative;
+      height: min(34vw, 152px);
+      min-height: 130px;
+      border: 0;
+      border-radius: 34px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,248,226,0.96));
+      box-shadow: 0 10px 0 rgba(177,132,72,0.14), 0 18px 24px var(--shadow);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: rgba(255, 222, 120, 0.32);
+      top: -18px;
+      right: -12px;
+    }
+
+    .card::after {
+      content: "✦";
+      position: absolute;
+      left: 16px;
+      top: 12px;
+      font-size: 24px;
+      color: rgba(255, 196, 77, 0.65);
+    }
+
+    .card:active {
+      transform: scale(0.96) translateY(3px);
+    }
+
+    .shape-wrap {
+      position: relative;
+      width: 104px;
+      height: 104px;
+      display: grid;
+      place-items: center;
+      filter: drop-shadow(0 9px 3px rgba(0,0,0,0.08));
+    }
+
+    .shape {
+      width: 90px;
+      height: 90px;
+      position: relative;
+      box-shadow: inset -9px -10px 0 rgba(0,0,0,0.08), inset 8px 8px 0 rgba(255,255,255,0.24);
+    }
+
+    .circle {
+      border-radius: 50%;
+    }
+
+    .square {
+      border-radius: 22px;
+      transform: rotate(-3deg);
+    }
+
+    .triangle {
+      width: 0;
+      height: 0;
+      border-left: 53px solid transparent;
+      border-right: 53px solid transparent;
+      border-bottom: 94px solid;
+      background: transparent !important;
+      box-shadow: none;
+      filter: drop-shadow(-7px 9px 0 rgba(0,0,0,0.08));
+    }
+
+    .star {
+      font-size: 100px;
+      line-height: 1;
+      text-shadow: -5px 7px 0 rgba(0,0,0,0.08);
+    }
+
+    .heart {
+      font-size: 96px;
+      line-height: 1;
+      text-shadow: -5px 7px 0 rgba(0,0,0,0.08);
+    }
+
+    .red { background: #ff6b6b; }
+    .blue { background: #4dabf7; }
+    .yellow { background: #ffd43b; }
+    .green { background: #69db7c; }
+
+    .triangle.red { border-bottom-color: #ff6b6b; }
+    .triangle.blue { border-bottom-color: #4dabf7; }
+    .triangle.yellow { border-bottom-color: #ffd43b; }
+    .triangle.green { border-bottom-color: #69db7c; }
+
+    .message-box {
+      min-height: 64px;
+      margin: 2px 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .message {
+      min-width: 74%;
+      padding: 13px 16px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.72);
+      border: 3px solid rgba(255,255,255,0.9);
+      box-shadow: 0 10px 18px var(--shadow);
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1.15;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: 0.16s ease;
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 25px;
+      padding: 16px 12px;
+      font-size: 20px;
+      font-weight: 900;
+      color: #3d2a00;
+      box-shadow: 0 7px 0 rgba(130,86,25,0.24);
+      cursor: pointer;
+    }
+
+    .btn:active {
+      transform: translateY(5px);
+      box-shadow: 0 2px 0 rgba(130,86,25,0.24);
+    }
+
+    .btn.next {
+      background: #ffcf5a;
+    }
+
+    .btn.sound {
+      background: #b7f0ce;
+    }
+
+    .success {
+      animation: pop 0.38s ease;
+      outline: 5px solid rgba(94, 203, 129, 0.55);
+    }
+
+    .wrong {
+      animation: wiggle 0.28s ease;
+      outline: 5px solid rgba(255, 178, 95, 0.55);
+    }
+
+    .spark {
+      position: fixed;
+      z-index: 5;
+      pointer-events: none;
+      font-size: 34px;
+      animation: fly 0.85s ease-out forwards;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(1); }
+      55% { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-7px); }
+      75% { transform: translateX(7px); }
+    }
+
+    @keyframes fly {
+      0% { opacity: 1; transform: translateY(0) scale(0.9) rotate(0); }
+      100% { opacity: 0; transform: translateY(-85px) scale(1.25) rotate(18deg); }
+    }
+
+    @media (max-height: 720px) {
+      .mascot {
+        width: 70px;
+        height: 70px;
+      }
+
+      .eye { top: 31px; }
+      .eye.left { left: 23px; }
+      .eye.right { right: 23px; }
+      .nose { top: 41px; }
+      .smile { top: 45px; }
+
+      h1 {
+        font-size: 23px;
+      }
+
+      .task {
+        font-size: 22px;
+      }
+
+      .card {
+        min-height: 116px;
+      }
+
+      .shape-wrap {
+        transform: scale(0.86);
+      }
+
+      .message {
+        font-size: 21px;
+        padding: 11px 14px;
+      }
+
+      .btn {
+        padding: 13px 10px;
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="decor" aria-hidden="true">
+    <div class="cloud one"></div>
+    <div class="cloud two"></div>
+    <div class="flower f1">🌼</div>
+    <div class="flower f2">🌷</div>
+    <div class="flower f3">🌸</div>
+  </div>
+
+  <main class="game">
+    <section class="header-card">
+      <div class="mascot" aria-hidden="true">
+        <div class="face">
+          <div class="eye left"></div>
+          <div class="eye right"></div>
+          <div class="nose"></div>
+          <div class="smile"></div>
+        </div>
+      </div>
+
+      <h1>Найди цвет и форму</h1>
+      <div class="task" id="task">Найди красный круг</div>
+    </section>
+
+    <section>
+      <div class="cards" id="cards"></div>
+
+      <div class="message-box">
+        <div class="message" id="message">Молодец!</div>
+      </div>
+    </section>
+
+    <section class="bottom">
+      <button class="btn sound" id="repeatBtn" type="button">🔊 Повторить</button>
+      <button class="btn next" id="nextBtn" type="button">✨ Новое</button>
+    </section>
+  </main>
+
+  <script>
+    const colors = [
+      { key: "red", name: "красный" },
+      { key: "blue", name: "синий" },
+      { key: "yellow", name: "жёлтый" },
+      { key: "green", name: "зелёный" }
+    ];
+
+    const shapes = [
+      { key: "circle", name: "круг", acc: "круг" },
+      { key: "square", name: "квадрат", acc: "квадрат" },
+      { key: "triangle", name: "треугольник", acc: "треугольник" },
+      { key: "star", name: "звёздочка", acc: "звёздочку" },
+      { key: "heart", name: "сердечко", acc: "сердечко" }
+    ];
+
+    const colorHex = {
+      red: "#ff6b6b",
+      blue: "#4dabf7",
+      yellow: "#ffd43b",
+      green: "#69db7c"
+    };
+
+    let target = null;
+    let answered = false;
+    let currentTaskText = "";
+
+    const taskEl = document.getElementById("task");
+    const cardsEl = document.getElementById("cards");
+    const messageEl = document.getElementById("message");
+    const nextBtn = document.getElementById("nextBtn");
+    const repeatBtn = document.getElementById("repeatBtn");
+
+    nextBtn.addEventListener("click", newRound);
+    repeatBtn.addEventListener("click", () => speak(currentTaskText));
+
+    function randomItem(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function speak(text) {
+      if (!("speechSynthesis" in window)) return;
+
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "ru-RU";
+      utterance.rate = 0.82;
+      utterance.pitch = 1.18;
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function showMessage(text) {
+      messageEl.textContent = text;
+      messageEl.classList.add("show");
+    }
+
+    function hideMessage() {
+      messageEl.classList.remove("show");
+    }
+
+    function createShape(item) {
+      const wrap = document.createElement("div");
+      wrap.className = "shape-wrap";
+
+      if (item.shape === "star") {
+        const star = document.createElement("div");
+        star.className = "star";
+        star.textContent = "★";
+        star.style.color = colorHex[item.color];
+        wrap.appendChild(star);
+        return wrap;
+      }
+
+      if (item.shape === "heart") {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = "♥";
+        heart.style.color = colorHex[item.color];
+        wrap.appendChild(heart);
+        return wrap;
+      }
+
+      const shape = document.createElement("div");
+      shape.className = `shape ${item.shape} ${item.color}`;
+      wrap.appendChild(shape);
+
+      return wrap;
+    }
+
+    function makeOption(color, shape) {
+      return {
+        color: color.key,
+        colorName: color.name,
+        shape: shape.key,
+        shapeName: shape.name,
+        shapeAcc: shape.acc
+      };
+    }
+
+    function newRound() {
+      answered = false;
+      hideMessage();
+
+      const targetColor = randomItem(colors);
+      const targetShape = randomItem(shapes);
+      target = makeOption(targetColor, targetShape);
+
+      currentTaskText = `Найди ${target.colorName} ${target.shapeAcc}`;
+      taskEl.textContent = currentTaskText;
+
+      const options = [target];
+
+      while (options.length < 4) {
+        const color = randomItem(colors);
+        const shape = randomItem(shapes);
+        const option = makeOption(color, shape);
+
+        const duplicate = options.some(
+          item => item.color === option.color && item.shape === option.shape
+        );
+
+        if (!duplicate) options.push(option);
+      }
+
+      options.sort(() => Math.random() - 0.5);
+      cardsEl.innerHTML = "";
+
+      options.forEach(option => {
+        const card = document.createElement("button");
+        card.className = "card";
+        card.type = "button";
+        card.setAttribute("aria-label", `${option.colorName} ${option.shapeName}`);
+        card.appendChild(createShape(option));
+        card.addEventListener("click", event => checkAnswer(option, card, event));
+        cardsEl.appendChild(card);
+      });
+
+      setTimeout(() => speak(currentTaskText), 250);
+    }
+
+    function checkAnswer(option, card, event) {
+      if (answered) return;
+
+      const isCorrect = option.color === target.color && option.shape === target.shape;
+
+      if (isCorrect) {
+        answered = true;
+        card.classList.add("success");
+        showMessage("Правильно! ⭐");
+        speak("Правильно! Молодец!");
+        makeSparkles(event);
+
+        setTimeout(() => {
+          newRound();
+        }, 1300);
+      } else {
+        card.classList.add("wrong");
+        showMessage("Попробуй ещё 💛");
+        speak("Попробуй ещё");
+
+        setTimeout(() => {
+          card.classList.remove("wrong");
+        }, 350);
+      }
+    }
+
+    function makeSparkles(event) {
+      const symbols = ["⭐", "✨", "🌟", "💛"];
+      const x = event.clientX || window.innerWidth / 2;
+      const y = event.clientY || window.innerHeight / 2;
+
+      for (let i = 0; i < 7; i++) {
+        const spark = document.createElement("div");
+        spark.className = "spark";
+        spark.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        spark.style.left = `${x + (Math.random() * 90 - 45)}px`;
+        spark.style.top = `${y + (Math.random() * 40 - 20)}px`;
+        spark.style.animationDelay = `${Math.random() * 0.12}s`;
+        document.body.appendChild(spark);
+
+        setTimeout(() => spark.remove(), 950);
+      }
+    }
+
+    newRound();
+  </script>
+</body>
+</html>
