@@ -3,17 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Найди цвет и форму</title>
+  <title>Развивашки для малыша</title>
   <style>
     :root {
-      --cream: #fff7df;
-      --sky: #dff6ff;
-      --mint: #dff8e9;
-      --text: #40352c;
-      --brown: #8b5e34;
-      --shadow: rgba(80, 54, 30, 0.16);
-      --good: #5ecb81;
-      --wrong: #ffb25f;
+      --bg1: #fff4cf;
+      --bg2: #e7f8ff;
+      --bg3: #e2f8e8;
+      --card: rgba(255, 255, 255, 0.78);
+      --text: #46382e;
+      --muted: #816b5a;
+      --yellow: #ffd45f;
+      --green: #85df9a;
+      --blue: #7ec8ff;
+      --pink: #ff9ab0;
+      --orange: #ffb36c;
+      --shadow: rgba(78, 52, 25, 0.16);
     }
 
     * {
@@ -29,9 +33,13 @@
       font-family: "Arial Rounded MT Bold", Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 12% 12%, rgba(255,255,255,0.95) 0 42px, transparent 43px),
-        radial-gradient(circle at 88% 18%, rgba(255,255,255,0.85) 0 36px, transparent 37px),
-        linear-gradient(180deg, #fff4cc 0%, #e5f8ff 48%, #dff8e9 100%);
+        radial-gradient(circle at 12% 13%, rgba(255,255,255,0.95) 0 42px, transparent 43px),
+        radial-gradient(circle at 88% 18%, rgba(255,255,255,0.82) 0 36px, transparent 37px),
+        linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
+    }
+
+    button {
+      font-family: inherit;
     }
 
     .decor {
@@ -44,7 +52,7 @@
 
     .cloud {
       position: absolute;
-      width: 130px;
+      width: 132px;
       height: 46px;
       border-radius: 999px;
       background: rgba(255,255,255,0.72);
@@ -60,10 +68,10 @@
     }
 
     .cloud::before {
-      width: 60px;
-      height: 60px;
-      left: 22px;
-      top: -28px;
+      width: 62px;
+      height: 62px;
+      left: 20px;
+      top: -29px;
     }
 
     .cloud::after {
@@ -73,13 +81,13 @@
       top: -18px;
     }
 
-    .cloud.one { top: 46px; left: -38px; transform: rotate(-3deg); }
-    .cloud.two { top: 100px; right: -52px; transform: scale(0.9) rotate(4deg); }
+    .cloud.one { top: 48px; left: -42px; transform: rotate(-3deg); }
+    .cloud.two { top: 106px; right: -58px; transform: scale(0.92) rotate(4deg); }
 
     .flower {
       position: absolute;
       font-size: 32px;
-      opacity: 0.7;
+      opacity: 0.72;
       animation: floaty 4.5s ease-in-out infinite;
     }
 
@@ -92,35 +100,49 @@
       50% { transform: translateY(-7px) rotate(3deg); }
     }
 
-    .game {
+    .app {
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 440px;
-      min-height: 100vh;
+      max-width: 460px;
+      height: 100vh;
       margin: 0 auto;
-      padding: 20px 16px 18px;
+      padding: 18px 16px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      text-align: center;
+      gap: 14px;
     }
 
-    .header-card {
-      position: relative;
-      margin-top: 6px;
-      padding: 18px 16px 20px;
+    .screen {
+      display: none;
+      height: 100%;
+      min-height: 0;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    .panel {
       border-radius: 34px;
-      background: rgba(255,255,255,0.72);
+      background: var(--card);
       box-shadow: 0 14px 28px var(--shadow);
       backdrop-filter: blur(8px);
       border: 3px solid rgba(255,255,255,0.9);
     }
 
+    .hero {
+      padding: 18px 16px;
+      text-align: center;
+    }
+
     .mascot {
-      width: 86px;
-      height: 86px;
-      margin: 0 auto 8px;
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 10px;
       border-radius: 50%;
       background: linear-gradient(145deg, #f6d7a9, #e9b77c);
       box-shadow: inset 0 -8px 0 rgba(139, 94, 52, 0.12), 0 8px 16px var(--shadow);
@@ -142,22 +164,17 @@
     .mascot::before { left: 8px; }
     .mascot::after { right: 8px; }
 
-    .face {
-      position: absolute;
-      inset: 0;
-    }
-
     .eye {
       position: absolute;
       width: 10px;
       height: 13px;
       border-radius: 50%;
       background: #3c2c23;
-      top: 37px;
+      top: 38px;
     }
 
-    .eye.left { left: 29px; }
-    .eye.right { right: 29px; }
+    .eye.left { left: 30px; }
+    .eye.right { right: 30px; }
 
     .nose {
       position: absolute;
@@ -166,7 +183,7 @@
       border-radius: 50%;
       background: #7a4b2e;
       left: 50%;
-      top: 50px;
+      top: 51px;
       transform: translateX(-50%);
     }
 
@@ -177,54 +194,152 @@
       border-bottom: 4px solid #7a4b2e;
       border-radius: 0 0 22px 22px;
       left: 50%;
-      top: 55px;
+      top: 56px;
       transform: translateX(-50%);
     }
 
+    h1, h2 {
+      margin: 0;
+      line-height: 1.08;
+    }
+
     h1 {
-      margin: 0 0 8px;
-      font-size: 26px;
-      line-height: 1.1;
-      letter-spacing: 0.2px;
+      font-size: 30px;
+    }
+
+    h2 {
+      font-size: 25px;
+    }
+
+    .subtitle {
+      margin: 8px auto 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.25;
+      max-width: 330px;
+    }
+
+    .menu-grid {
+      display: grid;
+      gap: 13px;
+      overflow: auto;
+      padding: 2px 2px 8px;
+      scrollbar-width: none;
+    }
+
+    .menu-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .menu-card {
+      border: 0;
+      width: 100%;
+      min-height: 104px;
+      border-radius: 30px;
+      padding: 14px 16px;
+      text-align: left;
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,248,226,0.95));
+      box-shadow: 0 9px 0 rgba(177,132,72,0.14), 0 16px 22px var(--shadow);
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 13px;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .menu-card:active,
+    .big-btn:active,
+    .option-card:active {
+      transform: translateY(4px) scale(0.98);
+    }
+
+    .menu-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      font-size: 40px;
+      background: #fff1b9;
+      box-shadow: inset 0 -7px 0 rgba(229, 170, 32, 0.16);
+    }
+
+    .menu-title {
+      font-size: 23px;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .menu-desc {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.22;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 58px 1fr 58px;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
+    }
+
+    .round-btn {
+      border: 0;
+      height: 52px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.86);
+      box-shadow: 0 6px 0 rgba(130,86,25,0.16);
+      font-size: 25px;
+      font-weight: 900;
+      color: var(--text);
+      cursor: pointer;
     }
 
     .task {
-      display: inline-block;
-      max-width: 100%;
-      padding: 13px 16px;
-      border-radius: 24px;
+      padding: 15px 14px;
+      border-radius: 28px;
       background: #fff1b9;
-      border: 3px solid #ffffff;
+      border: 3px solid #fff;
       box-shadow: inset 0 -5px 0 rgba(229, 170, 32, 0.18);
-      font-size: 25px;
+      font-size: 23px;
+      line-height: 1.12;
       font-weight: 900;
-      line-height: 1.15;
+      text-align: center;
+    }
+
+    .game-area {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
     }
 
     .cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin: 18px 0 12px;
+      gap: 14px;
     }
 
-    .card {
+    .option-card {
       position: relative;
-      height: min(34vw, 152px);
-      min-height: 130px;
+      height: min(32vw, 148px);
+      min-height: 124px;
       border: 0;
-      border-radius: 34px;
+      border-radius: 32px;
       background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,248,226,0.96));
       box-shadow: 0 10px 0 rgba(177,132,72,0.14), 0 18px 24px var(--shadow);
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      transition: transform 0.12s ease, filter 0.12s ease;
       overflow: hidden;
     }
 
-    .card::before {
+    .option-card::before {
       content: "";
       position: absolute;
       width: 54px;
@@ -233,19 +348,6 @@
       background: rgba(255, 222, 120, 0.32);
       top: -18px;
       right: -12px;
-    }
-
-    .card::after {
-      content: "✦";
-      position: absolute;
-      left: 16px;
-      top: 12px;
-      font-size: 24px;
-      color: rgba(255, 196, 77, 0.65);
-    }
-
-    .card:active {
-      transform: scale(0.96) translateY(3px);
     }
 
     .shape-wrap {
@@ -264,15 +366,8 @@
       box-shadow: inset -9px -10px 0 rgba(0,0,0,0.08), inset 8px 8px 0 rgba(255,255,255,0.24);
     }
 
-    .circle {
-      border-radius: 50%;
-    }
-
-    .square {
-      border-radius: 22px;
-      transform: rotate(-3deg);
-    }
-
+    .circle { border-radius: 50%; }
+    .square { border-radius: 22px; transform: rotate(-3deg); }
     .triangle {
       width: 0;
       height: 0;
@@ -284,13 +379,7 @@
       filter: drop-shadow(-7px 9px 0 rgba(0,0,0,0.08));
     }
 
-    .star {
-      font-size: 100px;
-      line-height: 1;
-      text-shadow: -5px 7px 0 rgba(0,0,0,0.08);
-    }
-
-    .heart {
+    .star, .heart, .emoji-big {
       font-size: 96px;
       line-height: 1;
       text-shadow: -5px 7px 0 rgba(0,0,0,0.08);
@@ -307,8 +396,7 @@
     .triangle.green { border-bottom-color: #69db7c; }
 
     .message-box {
-      min-height: 64px;
-      margin: 2px 0 12px;
+      min-height: 58px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -316,17 +404,18 @@
 
     .message {
       min-width: 74%;
-      padding: 13px 16px;
-      border-radius: 26px;
-      background: rgba(255,255,255,0.72);
-      border: 3px solid rgba(255,255,255,0.9);
+      padding: 12px 16px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.8);
+      border: 3px solid rgba(255,255,255,0.92);
       box-shadow: 0 10px 18px var(--shadow);
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 900;
       line-height: 1.15;
       opacity: 0;
       transform: translateY(8px);
       transition: 0.16s ease;
+      text-align: center;
     }
 
     .message.show {
@@ -334,36 +423,26 @@
       transform: translateY(0);
     }
 
-    .bottom {
+    .bottom-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
       padding-bottom: env(safe-area-inset-bottom);
     }
 
-    .btn {
+    .big-btn {
       border: 0;
       border-radius: 25px;
-      padding: 16px 12px;
-      font-size: 20px;
+      padding: 15px 10px;
+      font-size: 19px;
       font-weight: 900;
       color: #3d2a00;
       box-shadow: 0 7px 0 rgba(130,86,25,0.24);
       cursor: pointer;
     }
 
-    .btn:active {
-      transform: translateY(5px);
-      box-shadow: 0 2px 0 rgba(130,86,25,0.24);
-    }
-
-    .btn.next {
-      background: #ffcf5a;
-    }
-
-    .btn.sound {
-      background: #b7f0ce;
-    }
+    .sound { background: #b7f0ce; }
+    .next { background: #ffcf5a; }
 
     .success {
       animation: pop 0.38s ease;
@@ -383,6 +462,60 @@
       animation: fly 0.85s ease-out forwards;
     }
 
+    .scene {
+      display: grid;
+      gap: 12px;
+    }
+
+    .animal-box {
+      min-height: 170px;
+      border-radius: 34px;
+      background: rgba(255,255,255,0.78);
+      box-shadow: 0 12px 22px var(--shadow);
+      display: grid;
+      place-items: center;
+      font-size: 98px;
+      border: 3px solid rgba(255,255,255,0.9);
+    }
+
+    .food-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .food-btn {
+      min-height: 112px;
+      border: 0;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 8px 0 rgba(177,132,72,0.14), 0 14px 20px var(--shadow);
+      font-size: 58px;
+      cursor: pointer;
+    }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+    }
+
+    .memory-card {
+      min-height: 124px;
+      border: 0;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 8px 0 rgba(177,132,72,0.14), 0 14px 20px var(--shadow);
+      font-size: 58px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .hidden-emoji {
+      filter: saturate(0);
+      opacity: 0.55;
+    }
+
     @keyframes pop {
       0% { transform: scale(1); }
       55% { transform: scale(1.12); }
@@ -400,43 +533,29 @@
       100% { opacity: 0; transform: translateY(-85px) scale(1.25) rotate(18deg); }
     }
 
-    @media (max-height: 720px) {
-      .mascot {
-        width: 70px;
-        height: 70px;
-      }
-
+    @media (max-height: 735px) {
+      .app { padding: 12px 14px; gap: 10px; }
+      .hero { padding: 14px; }
+      .mascot { width: 70px; height: 70px; }
       .eye { top: 31px; }
       .eye.left { left: 23px; }
       .eye.right { right: 23px; }
       .nose { top: 41px; }
       .smile { top: 45px; }
-
-      h1 {
-        font-size: 23px;
-      }
-
-      .task {
-        font-size: 22px;
-      }
-
-      .card {
-        min-height: 116px;
-      }
-
-      .shape-wrap {
-        transform: scale(0.86);
-      }
-
-      .message {
-        font-size: 21px;
-        padding: 11px 14px;
-      }
-
-      .btn {
-        padding: 13px 10px;
-        font-size: 18px;
-      }
+      h1 { font-size: 25px; }
+      h2 { font-size: 21px; }
+      .subtitle { font-size: 15px; }
+      .menu-card { min-height: 88px; grid-template-columns: 62px 1fr; padding: 11px 13px; }
+      .menu-icon { width: 60px; height: 60px; font-size: 34px; border-radius: 20px; }
+      .menu-title { font-size: 19px; }
+      .menu-desc { font-size: 14px; }
+      .task { font-size: 20px; padding: 12px; }
+      .option-card { min-height: 108px; }
+      .shape-wrap { transform: scale(0.82); }
+      .animal-box { min-height: 130px; font-size: 76px; }
+      .food-btn, .memory-card { min-height: 94px; font-size: 48px; }
+      .message { font-size: 19px; padding: 10px 14px; }
+      .big-btn { font-size: 17px; padding: 12px 8px; }
     }
   </style>
 </head>
@@ -449,41 +568,98 @@
     <div class="flower f3">🌸</div>
   </div>
 
-  <main class="game">
-    <section class="header-card">
-      <div class="mascot" aria-hidden="true">
-        <div class="face">
+  <main class="app">
+    <section class="screen active" id="menuScreen">
+      <div class="hero panel">
+        <div class="mascot" aria-hidden="true">
           <div class="eye left"></div>
           <div class="eye right"></div>
           <div class="nose"></div>
           <div class="smile"></div>
         </div>
+        <h1>Развивашки</h1>
+        <p class="subtitle">Мини-игры для малыша: цвета, формы, животные и простые пары.</p>
       </div>
 
-      <h1>Найди цвет и форму</h1>
-      <div class="task" id="task">Найди красный круг</div>
+      <div class="menu-grid">
+        <button class="menu-card" type="button" onclick="openGame('colorShape')">
+          <div class="menu-icon">🔴</div>
+          <div>
+            <div class="menu-title">Цвет и форма</div>
+            <div class="menu-desc">Найди красный круг, синий квадрат и другие фигуры.</div>
+          </div>
+        </button>
+
+        <button class="menu-card" type="button" onclick="openGame('animalSound')">
+          <div class="menu-icon">🐱</div>
+          <div>
+            <div class="menu-title">Кто как говорит?</div>
+            <div class="menu-desc">Выбери животное по звуку: мяу, гав, му.</div>
+          </div>
+        </button>
+
+        <button class="menu-card" type="button" onclick="openGame('feedAnimal')">
+          <div class="menu-icon">🥕</div>
+          <div>
+            <div class="menu-title">Покорми зверька</div>
+            <div class="menu-desc">Дай зайке морковку, котику рыбку, собачке косточку.</div>
+          </div>
+        </button>
+
+        <button class="menu-card" type="button" onclick="openGame('pairs')">
+          <div class="menu-icon">🍎</div>
+          <div>
+            <div class="menu-title">Найди пару</div>
+            <div class="menu-desc">Простые одинаковые картинки без сложных правил.</div>
+          </div>
+        </button>
+      </div>
     </section>
 
-    <section>
-      <div class="cards" id="cards"></div>
+    <section class="screen" id="gameScreen">
+      <div class="topbar panel">
+        <button class="round-btn" type="button" onclick="goMenu()">←</button>
+        <h2 id="gameTitle">Игра</h2>
+        <button class="round-btn" type="button" onclick="repeatTask()">🔊</button>
+      </div>
+
+      <div class="task" id="task">Задание</div>
+
+      <section class="game-area" id="gameArea"></section>
 
       <div class="message-box">
         <div class="message" id="message">Молодец!</div>
       </div>
-    </section>
 
-    <section class="bottom">
-      <button class="btn sound" id="repeatBtn" type="button">🔊 Повторить</button>
-      <button class="btn next" id="nextBtn" type="button">✨ Новое</button>
+      <div class="bottom-row">
+        <button class="big-btn sound" type="button" onclick="repeatTask()">🔊 Повторить</button>
+        <button class="big-btn next" type="button" onclick="newRound()">✨ Новое</button>
+      </div>
     </section>
   </main>
 
   <script>
+    const state = {
+      game: null,
+      taskText: "",
+      target: null,
+      answered: false,
+      selectedPair: null,
+      foundPairs: 0
+    };
+
+    const titles = {
+      colorShape: "Цвет и форма",
+      animalSound: "Кто как говорит?",
+      feedAnimal: "Покорми зверька",
+      pairs: "Найди пару"
+    };
+
     const colors = [
-      { key: "red", name: "красный" },
-      { key: "blue", name: "синий" },
-      { key: "yellow", name: "жёлтый" },
-      { key: "green", name: "зелёный" }
+      { key: "red", name: "красный", hex: "#ff6b6b" },
+      { key: "blue", name: "синий", hex: "#4dabf7" },
+      { key: "yellow", name: "жёлтый", hex: "#ffd43b" },
+      { key: "green", name: "зелёный", hex: "#69db7c" }
     ];
 
     const shapes = [
@@ -501,34 +677,56 @@
       green: "#69db7c"
     };
 
-    let target = null;
-    let answered = false;
-    let currentTaskText = "";
+    const animals = [
+      { emoji: "🐱", name: "котик", sound: "мяу" },
+      { emoji: "🐶", name: "собачка", sound: "гав" },
+      { emoji: "🐮", name: "корова", sound: "му" },
+      { emoji: "🐸", name: "лягушка", sound: "ква" },
+      { emoji: "🐷", name: "свинка", sound: "хрю" }
+    ];
 
+    const feedSets = [
+      { animal: "🐰", name: "зайке", food: "🥕", foodName: "морковку", options: ["🥕", "🍎", "⚽"] },
+      { animal: "🐱", name: "котику", food: "🐟", foodName: "рыбку", options: ["🐟", "🥕", "🚗"] },
+      { animal: "🐶", name: "собачке", food: "🦴", foodName: "косточку", options: ["🦴", "🍌", "⭐"] },
+      { animal: "🐵", name: "обезьянке", food: "🍌", foodName: "банан", options: ["🍌", "🐟", "🧸"] }
+    ];
+
+    const pairEmojis = ["🍎", "⭐", "🐱", "🌸", "🚗", "🐟"];
+
+    const menuScreen = document.getElementById("menuScreen");
+    const gameScreen = document.getElementById("gameScreen");
+    const gameTitle = document.getElementById("gameTitle");
     const taskEl = document.getElementById("task");
-    const cardsEl = document.getElementById("cards");
+    const gameArea = document.getElementById("gameArea");
     const messageEl = document.getElementById("message");
-    const nextBtn = document.getElementById("nextBtn");
-    const repeatBtn = document.getElementById("repeatBtn");
-
-    nextBtn.addEventListener("click", newRound);
-    repeatBtn.addEventListener("click", () => speak(currentTaskText));
 
     function randomItem(arr) {
       return arr[Math.floor(Math.random() * arr.length)];
     }
 
+    function shuffle(arr) {
+      return arr.sort(() => Math.random() - 0.5);
+    }
+
     function speak(text) {
       if (!("speechSynthesis" in window)) return;
-
       window.speechSynthesis.cancel();
-
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = "ru-RU";
       utterance.rate = 0.82;
       utterance.pitch = 1.18;
-
       window.speechSynthesis.speak(utterance);
+    }
+
+    function setTask(text) {
+      state.taskText = text;
+      taskEl.textContent = text;
+      setTimeout(() => speak(text), 200);
+    }
+
+    function repeatTask() {
+      speak(state.taskText);
     }
 
     function showMessage(text) {
@@ -538,6 +736,43 @@
 
     function hideMessage() {
       messageEl.classList.remove("show");
+    }
+
+    function openGame(game) {
+      state.game = game;
+      gameTitle.textContent = titles[game];
+      menuScreen.classList.remove("active");
+      gameScreen.classList.add("active");
+      newRound();
+    }
+
+    function goMenu() {
+      window.speechSynthesis && window.speechSynthesis.cancel();
+      gameScreen.classList.remove("active");
+      menuScreen.classList.add("active");
+      hideMessage();
+    }
+
+    function newRound() {
+      hideMessage();
+      state.answered = false;
+      state.selectedPair = null;
+      state.foundPairs = 0;
+
+      if (state.game === "colorShape") renderColorShape();
+      if (state.game === "animalSound") renderAnimalSound();
+      if (state.game === "feedAnimal") renderFeedAnimal();
+      if (state.game === "pairs") renderPairs();
+    }
+
+    function optionButton(content, onClick, label = "") {
+      const btn = document.createElement("button");
+      btn.className = "option-card";
+      btn.type = "button";
+      if (label) btn.setAttribute("aria-label", label);
+      btn.appendChild(content);
+      btn.addEventListener("click", event => onClick(btn, event));
+      return btn;
     }
 
     function createShape(item) {
@@ -565,11 +800,10 @@
       const shape = document.createElement("div");
       shape.className = `shape ${item.shape} ${item.color}`;
       wrap.appendChild(shape);
-
       return wrap;
     }
 
-    function makeOption(color, shape) {
+    function makeShapeOption(color, shape) {
       return {
         color: color.key,
         colorName: color.name,
@@ -579,78 +813,184 @@
       };
     }
 
-    function newRound() {
-      answered = false;
-      hideMessage();
-
+    function renderColorShape() {
       const targetColor = randomItem(colors);
       const targetShape = randomItem(shapes);
-      target = makeOption(targetColor, targetShape);
+      const target = makeShapeOption(targetColor, targetShape);
+      state.target = target;
 
-      currentTaskText = `Найди ${target.colorName} ${target.shapeAcc}`;
-      taskEl.textContent = currentTaskText;
+      setTask(`Найди ${target.colorName} ${target.shapeAcc}`);
 
       const options = [target];
-
       while (options.length < 4) {
-        const color = randomItem(colors);
-        const shape = randomItem(shapes);
-        const option = makeOption(color, shape);
-
-        const duplicate = options.some(
-          item => item.color === option.color && item.shape === option.shape
-        );
-
+        const option = makeShapeOption(randomItem(colors), randomItem(shapes));
+        const duplicate = options.some(item => item.color === option.color && item.shape === option.shape);
         if (!duplicate) options.push(option);
       }
 
-      options.sort(() => Math.random() - 0.5);
-      cardsEl.innerHTML = "";
+      gameArea.innerHTML = "";
+      const grid = document.createElement("div");
+      grid.className = "cards";
 
-      options.forEach(option => {
-        const card = document.createElement("button");
-        card.className = "card";
-        card.type = "button";
-        card.setAttribute("aria-label", `${option.colorName} ${option.shapeName}`);
-        card.appendChild(createShape(option));
-        card.addEventListener("click", event => checkAnswer(option, card, event));
-        cardsEl.appendChild(card);
+      shuffle(options).forEach(option => {
+        const btn = optionButton(createShape(option), (card, event) => {
+          const ok = option.color === state.target.color && option.shape === state.target.shape;
+          handleSimpleAnswer(ok, card, event);
+        }, `${option.colorName} ${option.shapeName}`);
+        grid.appendChild(btn);
       });
 
-      setTimeout(() => speak(currentTaskText), 250);
+      gameArea.appendChild(grid);
     }
 
-    function checkAnswer(option, card, event) {
-      if (answered) return;
+    function renderAnimalSound() {
+      const target = randomItem(animals);
+      state.target = target;
+      setTask(`Кто говорит «${target.sound}»?`);
 
-      const isCorrect = option.color === target.color && option.shape === target.shape;
+      let options = [target];
+      while (options.length < 4) {
+        const animal = randomItem(animals);
+        if (!options.includes(animal)) options.push(animal);
+      }
 
-      if (isCorrect) {
-        answered = true;
-        card.classList.add("success");
+      gameArea.innerHTML = "";
+      const grid = document.createElement("div");
+      grid.className = "cards";
+
+      shuffle(options).forEach(animal => {
+        const div = document.createElement("div");
+        div.className = "emoji-big";
+        div.textContent = animal.emoji;
+        const btn = optionButton(div, (card, event) => {
+          handleSimpleAnswer(animal === state.target, card, event);
+        }, animal.name);
+        grid.appendChild(btn);
+      });
+
+      gameArea.appendChild(grid);
+    }
+
+    function renderFeedAnimal() {
+      const set = randomItem(feedSets);
+      state.target = set;
+      setTask(`Дай ${set.name} ${set.foodName}`);
+
+      gameArea.innerHTML = "";
+      const scene = document.createElement("div");
+      scene.className = "scene";
+
+      const animalBox = document.createElement("div");
+      animalBox.className = "animal-box";
+      animalBox.textContent = set.animal;
+
+      const row = document.createElement("div");
+      row.className = "food-row";
+
+      shuffle([...set.options]).forEach(food => {
+        const btn = document.createElement("button");
+        btn.className = "food-btn";
+        btn.type = "button";
+        btn.textContent = food;
+        btn.addEventListener("click", event => {
+          handleSimpleAnswer(food === set.food, btn, event);
+        });
+        row.appendChild(btn);
+      });
+
+      scene.appendChild(animalBox);
+      scene.appendChild(row);
+      gameArea.appendChild(scene);
+    }
+
+    function renderPairs() {
+      const chosen = shuffle([...pairEmojis]).slice(0, 2);
+      const deck = shuffle([...chosen, ...chosen]).map((emoji, index) => ({
+        id: index + "-" + emoji,
+        emoji,
+        found: false
+      }));
+
+      setTask("Найди одинаковые картинки");
+      gameArea.innerHTML = "";
+
+      const grid = document.createElement("div");
+      grid.className = "memory-grid";
+
+      deck.forEach(cardData => {
+        const btn = document.createElement("button");
+        btn.className = "memory-card";
+        btn.type = "button";
+        btn.textContent = cardData.emoji;
+
+        btn.addEventListener("click", () => {
+          if (cardData.found || btn.classList.contains("selected")) return;
+
+          if (!state.selectedPair) {
+            state.selectedPair = { cardData, btn };
+            btn.classList.add("selected");
+            btn.style.outline = "5px solid rgba(126,200,255,0.65)";
+            speak(cardData.emoji);
+            return;
+          }
+
+          if (state.selectedPair.cardData.emoji === cardData.emoji) {
+            cardData.found = true;
+            state.selectedPair.cardData.found = true;
+            btn.classList.add("success");
+            state.selectedPair.btn.classList.add("success");
+            btn.style.opacity = "0.55";
+            state.selectedPair.btn.style.opacity = "0.55";
+            showMessage("Пара! ⭐");
+            speak("Пара! Молодец!");
+            makeSparkles(window.innerWidth / 2, window.innerHeight / 2);
+            state.foundPairs++;
+            state.selectedPair = null;
+
+            if (state.foundPairs >= 2) {
+              setTimeout(newRound, 1200);
+            }
+          } else {
+            const old = state.selectedPair.btn;
+            btn.classList.add("wrong");
+            old.classList.add("wrong");
+            showMessage("Попробуй ещё 💛");
+            speak("Попробуй ещё");
+            setTimeout(() => {
+              btn.classList.remove("wrong");
+              old.classList.remove("wrong", "selected");
+              old.style.outline = "";
+              state.selectedPair = null;
+            }, 500);
+          }
+        });
+
+        grid.appendChild(btn);
+      });
+
+      gameArea.appendChild(grid);
+    }
+
+    function handleSimpleAnswer(ok, element, event) {
+      if (state.answered) return;
+
+      if (ok) {
+        state.answered = true;
+        element.classList.add("success");
         showMessage("Правильно! ⭐");
         speak("Правильно! Молодец!");
-        makeSparkles(event);
-
-        setTimeout(() => {
-          newRound();
-        }, 1300);
+        makeSparkles(event.clientX || window.innerWidth / 2, event.clientY || window.innerHeight / 2);
+        setTimeout(newRound, 1300);
       } else {
-        card.classList.add("wrong");
+        element.classList.add("wrong");
         showMessage("Попробуй ещё 💛");
         speak("Попробуй ещё");
-
-        setTimeout(() => {
-          card.classList.remove("wrong");
-        }, 350);
+        setTimeout(() => element.classList.remove("wrong"), 350);
       }
     }
 
-    function makeSparkles(event) {
+    function makeSparkles(x, y) {
       const symbols = ["⭐", "✨", "🌟", "💛"];
-      const x = event.clientX || window.innerWidth / 2;
-      const y = event.clientY || window.innerHeight / 2;
-
       for (let i = 0; i < 7; i++) {
         const spark = document.createElement("div");
         spark.className = "spark";
@@ -659,12 +999,9 @@
         spark.style.top = `${y + (Math.random() * 40 - 20)}px`;
         spark.style.animationDelay = `${Math.random() * 0.12}s`;
         document.body.appendChild(spark);
-
         setTimeout(() => spark.remove(), 950);
       }
     }
-
-    newRound();
   </script>
 </body>
 </html>
