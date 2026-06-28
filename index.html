@@ -266,7 +266,7 @@ function renderFarm(newTask=false){
   const a=farmAnimals[state.selected];
   gameArea.innerHTML = `
     <div class="farm-scene" id="farmScene">
-      <img class="farm-bg" src="assets/farm_bg.png" alt="Ферма">
+      <img class="farm-bg" src="farm_bg.png" alt="Ферма">
       <div class="farm-bubble" id="farmBubble">Нажми на животное</div>
     </div>
     <div class="info-card">
@@ -297,7 +297,7 @@ function placeAnimals(){
     const btn=document.createElement("button");
     btn.className="animal-sprite"+(k===state.selected?" selected":"")+(state.farmStates[k]==="sleep"?" sleep":"");
     btn.style.left=a.x+"%"; btn.style.top=a.y+"%"; btn.style.width=a.w+"%"; btn.style.height=a.h+"%";
-    btn.style.backgroundImage=`url(assets/${k}_${state.farmStates[k]}.png)`;
+    btn.style.backgroundImage=`url(${k}_${state.farmStates[k]}.png)`;
     btn.onclick=e=>selectAnimal(k,e);
     scene.appendChild(btn);
   });
@@ -324,7 +324,7 @@ function selectAnimal(k,e){
 function updateInfo(){
   const a=farmAnimals[state.selected];
   const p=document.getElementById("portrait");
-  if(p) p.style.backgroundImage=`url(assets/${state.selected}_normal.png)`;
+  if(p) p.style.backgroundImage=`url(${state.selected}_normal.png)`;
   const title=document.getElementById("infoTitle");
   const lines=document.getElementById("infoLines");
   if(title) title.textContent=a.name;
