@@ -16,7 +16,7 @@ body{
   background:linear-gradient(180deg,#fff3cc,#e0f8ff 48%,#dff8e8);
 }
 button{font:inherit;color:inherit}
-.app{max-width:480px;height:100vh;margin:0 auto;padding:10px;display:flex;flex-direction:column;gap:8px}
+.app{max-width:480px;height:100dvh;min-height:100svh;margin:0 auto;padding:8px;display:flex;flex-direction:column;gap:7px}
 .screen{display:none;height:100%;min-height:0;flex-direction:column;gap:8px}
 .screen.active{display:flex}
 .panel{border-radius:28px;background:var(--paper);border:3px solid rgba(255,255,255,.95);box-shadow:0 12px 24px var(--shadow);backdrop-filter:blur(8px)}
@@ -34,9 +34,9 @@ h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:20px;text-align
 .menu-icon{width:58px;height:58px;border-radius:20px;display:grid;place-items:center;font-size:31px;background:#fff0b6;box-shadow:inset 0 -7px 0 rgba(229,170,32,.14)}
 .menu-title{font-size:18px;font-weight:900;margin-bottom:3px}
 .menu-desc{font-size:13px;color:var(--muted);line-height:1.17}
-.topbar{display:grid;grid-template-columns:52px 1fr 52px;gap:8px;align-items:center;padding:9px}
-.round{height:48px;border:0;border-radius:18px;background:#fff;box-shadow:0 6px 0 rgba(130,86,25,.16);font-size:22px;font-weight:900}
-.task{padding:10px 12px;border-radius:24px;background:#fff0b6;border:3px solid #fff;box-shadow:inset 0 -5px 0 rgba(229,170,32,.16);text-align:center;font-size:19px;line-height:1.12;font-weight:900}
+.topbar{display:grid;grid-template-columns:48px 1fr 48px;gap:7px;align-items:center;padding:8px}
+.round{height:44px;border:0;border-radius:17px;background:#fff;box-shadow:0 6px 0 rgba(130,86,25,.16);font-size:21px;font-weight:900}
+.task{padding:8px 10px;border-radius:23px;background:#fff0b6;border:3px solid #fff;box-shadow:inset 0 -5px 0 rgba(229,170,32,.16);text-align:center;font-size:18px;line-height:1.1;font-weight:900}
 .game-area{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:10px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -55,7 +55,7 @@ h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:20px;text-align
 .star,.heart,.moon,.drop,.flower-shape,.house-shape{font-size:82px;line-height:1;text-shadow:-5px 7px 0 rgba(0,0,0,.08)}
 .red{background:#ff6b6b}.blue{background:#4dabf7}.yellow{background:#ffd43b}.green{background:#69db7c}.purple{background:#b197fc}.orange{background:#ffa94d}.pink{background:#ff8fab}
 .triangle.red{border-bottom-color:#ff6b6b}.triangle.blue{border-bottom-color:#4dabf7}.triangle.yellow{border-bottom-color:#ffd43b}.triangle.green{border-bottom-color:#69db7c}.triangle.purple{border-bottom-color:#b197fc}.triangle.orange{border-bottom-color:#ffa94d}.triangle.pink{border-bottom-color:#ff8fab}
-.message{min-height:42px;display:grid;place-items:center;padding:8px 12px;border-radius:22px;background:rgba(255,255,255,.82);border:3px solid rgba(255,255,255,.94);box-shadow:0 10px 18px var(--shadow);font-size:17px;font-weight:900;text-align:center;opacity:0;transform:translateY(8px);transition:.16s ease}
+.message{min-height:32px;display:grid;place-items:center;padding:5px 10px;border-radius:18px;background:rgba(255,255,255,.82);border:2px solid rgba(255,255,255,.94);box-shadow:0 8px 14px var(--shadow);font-size:15px;font-weight:900;text-align:center;opacity:0;transform:translateY(8px);transition:.16s ease}
 .message.show{opacity:1;transform:translateY(0)}
 .bottom{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding-bottom:env(safe-area-inset-bottom)}
 .big{border:0;border-radius:22px;padding:11px 8px;font-size:15px;font-weight:900;color:#3d2a00;box-shadow:0 7px 0 rgba(130,86,25,.22)}
@@ -67,15 +67,21 @@ h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:20px;text-align
 @keyframes fly{0%{opacity:1;transform:translateY(0) scale(.9) rotate(0)}100%{opacity:0;transform:translateY(-85px) scale(1.25) rotate(18deg)}}
 
 /* LIVING FARM */
-.farm-game{justify-content:space-between}
+.farm-game{
+  justify-content:start;
+  display:grid;
+  grid-template-rows:minmax(245px, 1fr) auto auto;
+  gap:7px;
+}
 .farm-scene{
   position:relative;
-  flex:1;
-  min-height:0;
-  border-radius:32px;
+  height:100%;
+  min-height:245px;
+  max-height:48dvh;
+  border-radius:28px;
   overflow:hidden;
   border:3px solid rgba(255,255,255,.95);
-  box-shadow:0 14px 24px var(--shadow);
+  box-shadow:0 12px 22px var(--shadow);
   background:#bdefff;
 }
 .farm-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -113,28 +119,33 @@ h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:20px;text-align
 }
 .info-card{
   display:grid;
-  grid-template-columns:72px 1fr;
-  gap:10px;
+  grid-template-columns:58px 1fr;
+  gap:8px;
   align-items:center;
-  padding:10px;
-  border-radius:26px;
+  padding:8px;
+  border-radius:23px;
   background:rgba(255,250,232,.94);
   border:3px solid rgba(255,255,255,.95);
-  box-shadow:0 12px 22px var(--shadow);
+  box-shadow:0 10px 18px var(--shadow);
 }
 .portrait{
-  width:72px;height:72px;border-radius:50%;background:#fff;border:4px solid #ffd45f;
+  width:58px;height:58px;border-radius:50%;background:#fff;border:4px solid #ffd45f;
   background-size:125%;background-repeat:no-repeat;background-position:center;
 }
-.info-title{font-size:24px;font-weight:900;line-height:1.05}
-.info-lines{font-size:15px;font-weight:900;line-height:1.35;color:var(--muted)}
+.info-title{font-size:21px;font-weight:900;line-height:1.05}
+.info-lines{font-size:13px;font-weight:900;line-height:1.25;color:var(--muted)}
 .info-lines b{color:#2d91d4}
-.farm-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding-bottom:env(safe-area-inset-bottom)}
-.farm-action{
-  min-height:64px;border:0;border-radius:22px;background:#fff;box-shadow:0 7px 0 rgba(130,86,25,.18),0 12px 18px var(--shadow);
-  font-size:25px;font-weight:900
+.farm-actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  padding-bottom:max(4px, env(safe-area-inset-bottom));
 }
-.farm-action span{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+.farm-action{
+  min-height:52px;border:0;border-radius:18px;background:#fff;box-shadow:0 6px 0 rgba(130,86,25,.18),0 10px 16px var(--shadow);
+  font-size:21px;font-weight:900
+}
+.farm-action span{display:block;font-size:9px;color:var(--muted);margin-top:1px}
 .collect-wrap{display:grid;gap:10px}
 .collect-basket{
   min-height:82px;border-radius:28px;background:rgba(255,255,255,.9);
@@ -239,8 +250,8 @@ function repeatTask(){speak(state.task); beep()}
 function toggleVoice(){state.voice=!state.voice; voiceBtn.textContent=state.voice?"🔊":"🔇"; if(state.voice)speak(state.task); else if("speechSynthesis" in window)speechSynthesis.cancel()}
 function showMsg(t){messageEl.textContent=t; messageEl.classList.add("show")}
 function hideMsg(){messageEl.classList.remove("show")}
-function openGame(g){state.game=g; gameTitle.textContent=titles[g]; menuScreen.classList.remove("active"); gameScreen.classList.add("active"); newRound()}
-function goMenu(){if("speechSynthesis" in window)speechSynthesis.cancel(); hideMsg(); gameScreen.classList.remove("active"); menuScreen.classList.add("active"); bottomRow.classList.remove("hidden")}
+function openGame(g){state.game=g; document.body.classList.toggle('farm-mode', g==='farm'); gameTitle.textContent=titles[g]; menuScreen.classList.remove("active"); gameScreen.classList.add("active"); newRound()}
+function goMenu(){if("speechSynthesis" in window)speechSynthesis.cancel(); document.body.classList.remove('farm-mode'); hideMsg(); gameScreen.classList.remove("active"); menuScreen.classList.add("active"); bottomRow.classList.remove("hidden")}
 function newRound(){hideMsg(); state.answered=false; gameArea.className="game-area"; bottomRow.classList.remove("hidden"); if(state.game==="farm")renderFarm(true); if(state.game==="colorShape")renderColorShape(); if(state.game==="pictureFind")renderPictureFind(); if(state.game==="animalSound")renderAnimalSound(); if(state.game==="feedAnimal")renderFeedAnimal(); if(state.game==="sortBasket")renderSortBasket()}
 function makeChoice(content,onClick,label=""){const b=document.createElement("button");b.className="choice";b.type="button";if(label)b.ariaLabel=label;b.appendChild(content);b.onclick=e=>onClick(b,e);return b}
 function emojiEl(e,big=true){const d=document.createElement("div");d.className=big?"emoji big":"emoji";d.textContent=e;return d}
@@ -267,7 +278,7 @@ function renderFarm(newTask=false){
   gameArea.innerHTML = `
     <div class="farm-scene" id="farmScene">
       <img class="farm-bg" src="farm_bg.png" alt="Ферма">
-      <div class="farm-bubble" id="farmBubble">Нажми на животное</div>
+      <div class="farm-bubble" id="farmBubble">Нажми на зверька</div>
     </div>
     <div class="info-card">
       <div class="portrait" id="portrait"></div>
