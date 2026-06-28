@@ -122,6 +122,9 @@ h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:20px;text-align
   font-weight:900;
   text-align:center;
 }
+
+.object-hotspot{position:absolute;border:0;background:transparent;padding:0;z-index:3;border-radius:18px}
+.object-hotspot:active{transform:scale(.98)}
 .info-card{
   width:100%;
   display:grid;
@@ -238,11 +241,18 @@ const farmAnimals = {
   cow:{name:"Корова",acc:"корову",say:"Му-у",food:"травку",gives:"молоко",x:38,y:47,w:28,h:22},
   horse:{name:"Лошадка",acc:"лошадку",say:"И-го-го",food:"сено",gives:"быстро бегает",x:13,y:43,w:25,h:22},
   pig:{name:"Свинка",acc:"свинку",say:"Хрю-хрю",food:"овощи",gives:"любит лужи",x:68,y:48,w:23,h:18},
-  sheep:{name:"Овечка",acc:"овечку",say:"Бе-е",food:"травку",gives:"шерсть",x:70,y:64,w:24,h:19},
-  rooster:{name:"Петушок",acc:"петушка",say:"Ку-ка-ре-ку",food:"зёрнышки",gives:"будит утром",x:58,y:70,w:20,h:18},
+  sheep:{name:"Овечка",acc:"овечку",say:"Бе-е",food:"травку",gives:"шерсть",x:72,y:64,w:23,h:19},
+  rooster:{name:"Петушок",acc:"петушка",say:"Ку-ка-ре-ку",food:"зёрнышки",gives:"будит утром",x:54,y:72,w:19,h:17},
   chick:{name:"Цыплёнок",acc:"цыплёнка",say:"Пи-пи",food:"зёрнышки",gives:"маленький птенец",x:18,y:66,w:16,h:14}
 };
 const farmKeys = Object.keys(farmAnimals);
+const farmObjects = {
+  pond:{label:"Пруд", x:0, y:63, w:28, h:28, sound:"Плюх-плюх!", text:"Пруд булькает." , icon:"💧"},
+  tree:{label:"Дерево", x:0, y:24, w:17, h:28, sound:"Ш-ш-ш!", text:"Дерево шумит листочками.", icon:"🍃"},
+  hay:{label:"Сено", x:18, y:42, w:13, h:14, sound:"Шур-шур!", text:"Сено шуршит.", icon:"🌾"},
+  barn:{label:"Сарай", x:55, y:22, w:28, h:32, sound:"Скрип-скрип!", text:"Сарай открывается со скрипом.", icon:"🚪"},
+  mill:{label:"Мельница", x:84, y:10, w:16, h:26, sound:"Вжух-вжух!", text:"Мельница крутится.", icon:"🌬️"}
+};
 
 const menuScreen=document.getElementById("menuScreen"), gameScreen=document.getElementById("gameScreen"), gameTitle=document.getElementById("gameTitle"), taskEl=document.getElementById("task"), gameArea=document.getElementById("gameArea"), messageEl=document.getElementById("message"), bottomRow=document.getElementById("bottomRow"), voiceBtn=document.getElementById("voiceBtn");
 
@@ -279,7 +289,7 @@ function renderFarm(newTask=false){
     const k=randomItem(farmKeys);
     state.target=k;
     const a=farmAnimals[k];
-    setTask(randomItem([`Найди ${a.acc}`,`Погладь ${a.acc}`,`Кто говорит ${a.say}?`]));
+    setTask(randomItem([`Где ${a.acc}?`,`Найди ${a.acc}`]));
   }
   const a=farmAnimals[state.selected];
   gameArea.innerHTML = `
@@ -302,10 +312,11 @@ function renderFarm(newTask=false){
       <button class="farm-action" onclick="farmAction('eat')">🌿<span>Кормить</span></button>
       <button class="farm-action" onclick="farmAction('happy')">🎈<span>Играть</span></button>
       <button class="farm-action" onclick="farmAction('sleep')">🌙<span>Спать</span></button>
-      <button class="farm-action" onclick="listenAnimal()">🔊<span>Слушать</span></button>
+      <button class="farm-action" onclick="newFarmTask()">❓<span>Задание</span></button>
     </div>
   `;
   placeAnimals();
+  placeObjects();
   updateInfo();
 }
 function placeAnimals(){
@@ -320,23 +331,49 @@ function placeAnimals(){
     scene.appendChild(btn);
   });
 }
+function placeObjects(){
+  const scene=document.getElementById("farmScene");
+  Object.keys(farmObjects).forEach(key=>{
+    const o=farmObjects[key];
+    const btn=document.createElement("button");
+    btn.className="object-hotspot";
+    btn.style.left=o.x+"%"; btn.style.top=o.y+"%"; btn.style.width=o.w+"%"; btn.style.height=o.h+"%";
+    btn.onclick=e=>tapObject(key,e);
+    scene.appendChild(btn);
+  });
+}
+function newFarmTask(){
+  const k=randomItem(farmKeys);
+  state.target=k;
+  const a=farmAnimals[k];
+  setTask(randomItem([`Где ${a.acc}?`,`Найди ${a.acc}`]));
+  showMsg("Найди зверька 💛");
+}
+function tapObject(key,e){
+  const o=farmObjects[key];
+  showMsg(o.text);
+  speak(`${o.sound} ${o.text}`);
+  beep();
+  popFarm(e.clientX,e.clientY,o.icon);
+}
 function selectAnimal(k,e){
   state.selected=k;
+  const a=farmAnimals[k];
   const ok=!state.target || state.target===k;
   if(ok){
-    const a=farmAnimals[k];
-    showMsg(a.say);
+    showMsg(ok && state.target ? `Да, это ${a.name.toLowerCase()}!` : a.say);
     speak(a.say);
     beep();
     popFarm(e.clientX,e.clientY,"💛");
     const el=e.currentTarget; el.classList.add("happy"); setTimeout(()=>el.classList.remove("happy"),600);
-    if(state.target) setTimeout(()=>{state.target=null; renderFarm(true)},900);
+    if(state.target===k){
+      state.target=null;
+    }
   } else {
     showMsg("Попробуй ещё 💛");
     speak("Попробуй ещё");
     beep("no");
   }
-  updateInfo();
   renderFarm(false);
 }
 function updateInfo(){
@@ -351,22 +388,17 @@ function updateInfo(){
 function farmAction(action){
   state.farmStates[state.selected]=action;
   const a=farmAnimals[state.selected];
-  let text = action==="eat" ? `${a.name} ест` : action==="happy" ? `${a.name} радуется` : `${a.name} спит`;
+  let text = action==="eat" ? `${a.name} ест` : action==="happy" ? `${a.name} играет` : `${a.name} спит`;
   let icon = action==="eat" ? "🌿" : action==="happy" ? "🎈" : "💤";
-  setTask(text);
   showMsg(text);
   speak(text);
   beep();
   renderFarm(false);
   const scene=document.getElementById("farmScene");
   if(scene) popFarm(innerWidth/2, innerHeight/2, icon);
-  if(action!=="normal"){
-    setTimeout(()=>{ if(state.game==="farm"){ state.farmStates[state.selected]="normal"; renderFarm(false); } }, 2600);
-  }
 }
 function listenAnimal(){
   const a=farmAnimals[state.selected];
-  setTask(`${a.name} говорит ${a.say}`);
   showMsg(a.say);
   speak(a.say);
   beep();
