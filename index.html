@@ -6,7 +6,7 @@
 <title>Развивашки в дорогу</title>
 <style>
 :root{
-  --text:#44362d; --muted:#806c5e; --paper:rgba(255,255,255,.86);
+  --text:#44362d; --muted:#806c5e; --paper:rgba(255,255,255,.88);
   --shadow:rgba(72,48,24,.18); --yellow:#ffd45f; --green:#85df9b; --blue:#8fd0ff;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none}
@@ -16,12 +16,12 @@ body{
   background:linear-gradient(180deg,#fff3cc,#e0f8ff 48%,#dff8e8);
 }
 button{font:inherit;color:inherit}
-.app{max-width:480px;height:100vh;margin:0 auto;padding:11px;display:flex;flex-direction:column;gap:9px}
-.screen{display:none;height:100%;min-height:0;flex-direction:column;gap:9px}
+.app{max-width:480px;height:100vh;margin:0 auto;padding:10px;display:flex;flex-direction:column;gap:8px}
+.screen{display:none;height:100%;min-height:0;flex-direction:column;gap:8px}
 .screen.active{display:flex}
-.panel{border-radius:30px;background:var(--paper);border:3px solid rgba(255,255,255,.95);box-shadow:0 14px 28px var(--shadow);backdrop-filter:blur(8px)}
+.panel{border-radius:28px;background:var(--paper);border:3px solid rgba(255,255,255,.95);box-shadow:0 12px 24px var(--shadow);backdrop-filter:blur(8px)}
 .hero{padding:14px;text-align:center}
-h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:21px;text-align:center}
+h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:20px;text-align:center}
 .subtitle{margin:7px auto 0;max-width:350px;color:var(--muted);font-size:14px;line-height:1.22}
 .menu-grid{display:grid;gap:10px;overflow:auto;padding:2px 2px 8px;scrollbar-width:none}
 .menu-grid::-webkit-scrollbar{display:none}
@@ -30,7 +30,7 @@ h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:21px;text-align
   background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,248,225,.96));
   box-shadow:0 8px 0 rgba(177,132,72,.14),0 14px 22px var(--shadow);cursor:pointer
 }
-.menu-card:active,.choice:active,.round:active,.big:active,.act:active,.hotspot:active{transform:translateY(4px) scale(.98)}
+.menu-card:active,.choice:active,.round:active,.big:active,.farm-action:active,.animal-sprite:active{transform:translateY(4px) scale(.98)}
 .menu-icon{width:58px;height:58px;border-radius:20px;display:grid;place-items:center;font-size:31px;background:#fff0b6;box-shadow:inset 0 -7px 0 rgba(229,170,32,.14)}
 .menu-title{font-size:18px;font-weight:900;margin-bottom:3px}
 .menu-desc{font-size:13px;color:var(--muted);line-height:1.17}
@@ -55,70 +55,102 @@ h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:21px;text-align
 .star,.heart,.moon,.drop,.flower-shape,.house-shape{font-size:82px;line-height:1;text-shadow:-5px 7px 0 rgba(0,0,0,.08)}
 .red{background:#ff6b6b}.blue{background:#4dabf7}.yellow{background:#ffd43b}.green{background:#69db7c}.purple{background:#b197fc}.orange{background:#ffa94d}.pink{background:#ff8fab}
 .triangle.red{border-bottom-color:#ff6b6b}.triangle.blue{border-bottom-color:#4dabf7}.triangle.yellow{border-bottom-color:#ffd43b}.triangle.green{border-bottom-color:#69db7c}.triangle.purple{border-bottom-color:#b197fc}.triangle.orange{border-bottom-color:#ffa94d}.triangle.pink{border-bottom-color:#ff8fab}
-.message{min-height:45px;display:grid;place-items:center;padding:8px 12px;border-radius:22px;background:rgba(255,255,255,.82);border:3px solid rgba(255,255,255,.94);box-shadow:0 10px 18px var(--shadow);font-size:18px;font-weight:900;text-align:center;opacity:0;transform:translateY(8px);transition:.16s ease}
+.message{min-height:42px;display:grid;place-items:center;padding:8px 12px;border-radius:22px;background:rgba(255,255,255,.82);border:3px solid rgba(255,255,255,.94);box-shadow:0 10px 18px var(--shadow);font-size:17px;font-weight:900;text-align:center;opacity:0;transform:translateY(8px);transition:.16s ease}
 .message.show{opacity:1;transform:translateY(0)}
 .bottom{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding-bottom:env(safe-area-inset-bottom)}
 .big{border:0;border-radius:22px;padding:11px 8px;font-size:15px;font-weight:900;color:#3d2a00;box-shadow:0 7px 0 rgba(130,86,25,.22)}
 .sound{background:#b7f0ce}.new{background:#ffcf5a}
 .success{animation:pop .38s ease;outline:5px solid rgba(94,203,129,.55)}.wrong{animation:wiggle .28s ease;outline:5px solid rgba(255,178,95,.55)}
-.spark{position:fixed;z-index:5;pointer-events:none;font-size:32px;animation:fly .85s ease-out forwards}
+.spark{position:fixed;z-index:50;pointer-events:none;font-size:32px;animation:fly .85s ease-out forwards}
 @keyframes pop{0%{transform:scale(1)}55%{transform:scale(1.12)}100%{transform:scale(1)}}
 @keyframes wiggle{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
 @keyframes fly{0%{opacity:1;transform:translateY(0) scale(.9) rotate(0)}100%{opacity:0;transform:translateY(-85px) scale(1.25) rotate(18deg)}}
 
-/* FARM */
-.farm-card{
+/* LIVING FARM */
+.farm-game{justify-content:space-between}
+.farm-scene{
   position:relative;
   flex:1;
   min-height:0;
-  border-radius:34px;
+  border-radius:32px;
   overflow:hidden;
   border:3px solid rgba(255,255,255,.95);
   box-shadow:0 14px 24px var(--shadow);
-  background:#fff;
+  background:#bdefff;
 }
-.farm-img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-.farm-overlay{
-  position:absolute;
-  inset:0;
-}
-.hotspot{
+.farm-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.animal-sprite{
   position:absolute;
   border:0;
-  border-radius:999px;
-  background:rgba(255,212,95,.02);
-  cursor:pointer;
+  background:transparent;
+  padding:0;
+  background-size:contain;
+  background-position:center bottom;
+  background-repeat:no-repeat;
+  filter:drop-shadow(-4px 8px 0 rgba(0,0,0,.14));
+  transition:.25s ease;
+  z-index:5;
 }
-.hotspot.show{
-  background:rgba(255,212,95,.28);
-  outline:4px solid rgba(255,255,255,.85);
-}
-.bubble{
+.animal-sprite.selected{filter:drop-shadow(0 0 8px rgba(255,231,80,.95)) drop-shadow(-4px 8px 0 rgba(0,0,0,.14))}
+.animal-sprite.happy{animation:animalJump .55s ease}
+.animal-sprite.sleep{animation:sleepy 1.2s ease-in-out infinite}
+@keyframes animalJump{0%,100%{transform:translateY(0) scale(1)}45%{transform:translateY(-18px) scale(1.06)}}
+@keyframes sleepy{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.farm-bubble{
   position:absolute;
-  z-index:21;
-  font-size:34px;
-  animation:rise 1s ease-out forwards;
-  pointer-events:none;
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:20;
+  max-width:86%;
+  padding:8px 12px;
+  border-radius:20px;
+  background:rgba(255,255,255,.92);
+  box-shadow:0 8px 14px var(--shadow);
+  font-size:16px;
+  font-weight:900;
+  text-align:center;
 }
-@keyframes rise{0%{opacity:1;transform:translateY(0) scale(.8)}100%{opacity:0;transform:translateY(-70px) scale(1.25)}}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.stat{padding:7px;border-radius:18px;background:rgba(255,255,255,.86);box-shadow:0 8px 14px var(--shadow);font-size:11px;font-weight:900;text-align:center}
-.bar{height:10px;margin-top:5px;border-radius:999px;overflow:hidden;background:rgba(70,54,45,.13)}
-.fill{height:100%;width:50%;border-radius:999px;transition:.2s ease}
-.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.act{min-height:58px;border:0;border-radius:20px;background:rgba(255,255,255,.92);box-shadow:0 7px 0 rgba(130,86,25,.16),0 12px 18px var(--shadow);font-size:23px;font-weight:900}
-.cap{display:block;margin-top:2px;font-size:10px;color:var(--muted)}
+.info-card{
+  display:grid;
+  grid-template-columns:72px 1fr;
+  gap:10px;
+  align-items:center;
+  padding:10px;
+  border-radius:26px;
+  background:rgba(255,250,232,.94);
+  border:3px solid rgba(255,255,255,.95);
+  box-shadow:0 12px 22px var(--shadow);
+}
+.portrait{
+  width:72px;height:72px;border-radius:50%;background:#fff;border:4px solid #ffd45f;
+  background-size:125%;background-repeat:no-repeat;background-position:center;
+}
+.info-title{font-size:24px;font-weight:900;line-height:1.05}
+.info-lines{font-size:15px;font-weight:900;line-height:1.35;color:var(--muted)}
+.info-lines b{color:#2d91d4}
+.farm-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding-bottom:env(safe-area-inset-bottom)}
+.farm-action{
+  min-height:64px;border:0;border-radius:22px;background:#fff;box-shadow:0 7px 0 rgba(130,86,25,.18),0 12px 18px var(--shadow);
+  font-size:25px;font-weight:900
+}
+.farm-action span{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+.collect-wrap{display:grid;gap:10px}
+.collect-basket{
+  min-height:82px;border-radius:28px;background:rgba(255,255,255,.9);
+  border:3px solid rgba(255,255,255,.95);box-shadow:0 10px 18px var(--shadow);
+  display:grid;place-items:center;font-size:46px;font-weight:900
+}
+.collected{opacity:.28;filter:saturate(.35);transform:scale(.92)}
 .hidden{display:none!important}
 @media(max-height:740px){
-  .app{padding:8px;gap:7px} h1{font-size:22px} h2{font-size:18px} .subtitle{font-size:12px}
+  .app{padding:7px;gap:6px} h1{font-size:22px} h2{font-size:18px} .subtitle{font-size:12px}
   .menu-card{min-height:72px;grid-template-columns:50px 1fr}.menu-icon{width:50px;height:50px;font-size:28px}.menu-title{font-size:16px}.menu-desc{font-size:12px}
-  .task{font-size:17px;padding:8px}.choice{min-height:90px}.emoji{font-size:48px}.emoji.big{font-size:66px}.shape-wrap{transform:scale(.76)}
-  .act{min-height:50px;font-size:20px}.stat{font-size:10px;padding:5px}.message{font-size:16px;min-height:38px}
+  .task{font-size:16px;padding:7px}.choice{min-height:88px}.emoji{font-size:47px}.emoji.big{font-size:64px}.shape-wrap{transform:scale(.74)}
+  .message{font-size:15px;min-height:34px;padding:6px 9px}
+  .farm-action{min-height:52px;font-size:21px;border-radius:18px}.farm-action span{font-size:9px}
+  .info-card{grid-template-columns:58px 1fr;padding:7px}.portrait{width:58px;height:58px}.info-title{font-size:20px}.info-lines{font-size:13px}
+  .farm-bubble{font-size:14px;padding:6px 9px}
 }
 </style>
 </head>
@@ -127,15 +159,15 @@ h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:21px;text-align
   <section class="screen active" id="menuScreen">
     <div class="hero panel">
       <h1>Развивашки в дорогу</h1>
-      <p class="subtitle">Все игры в одном сборнике: ферма, цвета, формы, картинки, животные и кормление.</p>
+      <p class="subtitle">Все игры в одном сборнике: живая ферма, цвета, формы, картинки, животные и кормление.</p>
     </div>
     <div class="menu-grid">
-      <button class="menu-card" onclick="openGame('farm')"><div class="menu-icon">🐄</div><div><div class="menu-title">Ферма со стикерами</div><div class="menu-desc">Картинка цельная, сверху зоны для животных.</div></div></button>
+      <button class="menu-card" onclick="openGame('farm')"><div class="menu-icon">🐄</div><div><div class="menu-title">Живая ферма</div><div class="menu-desc">Звери меняют позу: обычная, радостная, ест, спит.</div></div></button>
       <button class="menu-card" onclick="openGame('colorShape')"><div class="menu-icon">🔷</div><div><div class="menu-title">Цвет и форма</div><div class="menu-desc">Круг, ромб, овал, месяц, капелька, домик.</div></div></button>
       <button class="menu-card" onclick="openGame('pictureFind')"><div class="menu-icon">🧸</div><div><div class="menu-title">Найди картинку</div><div class="menu-desc">Игрушки, еда, транспорт, звери.</div></div></button>
-      <button class="menu-card" onclick="openGame('animalSound')"><div class="menu-icon">🐱</div><div><div class="menu-title">Кто как говорит?</div><div class="menu-desc">Мяу, гав, му, ква, хрю.</div></div></button>
+      <button class="menu-card" onclick="openGame('animalSound')"><div class="menu-icon">🐱</div><div><div class="menu-title">Кто как говорит?</div><div class="menu-desc">Кто мяукает, гавкает, мычит.</div></div></button>
       <button class="menu-card" onclick="openGame('feedAnimal')"><div class="menu-icon">🥕</div><div><div class="menu-title">Покорми зверька</div><div class="menu-desc">Дай зайке морковку, котику рыбку.</div></div></button>
-      <button class="menu-card" onclick="openGame('sortBasket')"><div class="menu-icon">🧺</div><div><div class="menu-title">Покажи предмет</div><div class="menu-desc">Найди фрукт, игрушку или зверька.</div></div></button>
+      <button class="menu-card" onclick="openGame('sortBasket')"><div class="menu-icon">🧺</div><div><div class="menu-title">Собери в корзинку</div><div class="menu-desc">Собери все фрукты, игрушки или зверят.</div></div></button>
     </div>
   </section>
 
@@ -156,8 +188,9 @@ h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:21px;text-align
 </main>
 
 <script>
-const state = {game:null, voice:true, task:"", target:null, answered:false, selected:"cow", food:72, joy:70, clean:74};
-const titles = {farm:"Ферма",colorShape:"Цвет и форма",pictureFind:"Найди картинку",animalSound:"Кто как говорит?",feedAnimal:"Покорми зверька",sortBasket:"Покажи предмет"};
+const state = {game:null, voice:true, task:"", target:null, answered:false, selected:"cow", farmStates:{}};
+const titles = {farm:"Живая ферма",colorShape:"Цвет и форма",pictureFind:"Найди картинку",animalSound:"Кто как говорит?",feedAnimal:"Покорми зверька",sortBasket:"Корзинка"};
+
 const colors = [
   {key:"red",name:"красный",hex:"#ff6b6b"},{key:"blue",name:"синий",hex:"#4dabf7"},{key:"yellow",name:"жёлтый",hex:"#ffd43b"},{key:"green",name:"зелёный",hex:"#69db7c"},{key:"purple",name:"фиолетовый",hex:"#b197fc"},{key:"orange",name:"оранжевый",hex:"#ffa94d"},{key:"pink",name:"розовый",hex:"#ff8fab"}
 ];
@@ -169,7 +202,7 @@ const pictureItems = [
   {emoji:"🧸",name:"мишку"},{emoji:"🚗",name:"машинку"},{emoji:"⚽",name:"мячик"},{emoji:"🍎",name:"яблоко"},{emoji:"🍌",name:"банан"},{emoji:"🌸",name:"цветочек"},{emoji:"🐟",name:"рыбку"},{emoji:"⭐",name:"звёздочку"},{emoji:"🦋",name:"бабочку"},{emoji:"🚂",name:"паровозик"},{emoji:"🎈",name:"шарик"},{emoji:"🦆",name:"уточку"}
 ];
 const animalsBasic = [
-  {emoji:"🐱",name:"котик",sound:"мяу"},{emoji:"🐶",name:"собачка",sound:"гав"},{emoji:"🐮",name:"корова",sound:"му"},{emoji:"🐸",name:"лягушка",sound:"ква"},{emoji:"🐷",name:"свинка",sound:"хрю"},{emoji:"🐔",name:"курочка",sound:"ко-ко"}
+  {emoji:"🐱",name:"котик",question:"Кто мяукает?"},{emoji:"🐶",name:"собачка",question:"Кто гавкает?"},{emoji:"🐮",name:"корова",question:"Кто мычит?"},{emoji:"🐸",name:"лягушка",question:"Кто квакает?"},{emoji:"🐷",name:"свинка",question:"Кто хрюкает?"},{emoji:"🐔",name:"курочка",question:"Кто кудахчет?"}
 ];
 const feedSets = [
   {animal:"🐰",name:"зайке",food:"🥕",foodName:"морковку",options:["🥕","🍎","⚽"]},
@@ -178,24 +211,27 @@ const feedSets = [
   {animal:"🐵",name:"обезьянке",food:"🍌",foodName:"банан",options:["🍌","🐟","🧸"]}
 ];
 const sortSets = [
-  {title:"Покажи фрукт",targetType:"fruit",items:[{e:"🍎",t:"fruit"},{e:"🍌",t:"fruit"},{e:"🧸",t:"toy"},{e:"🚗",t:"toy"},{e:"🍐",t:"fruit"},{e:"⚽",t:"toy"}]},
-  {title:"Покажи игрушку",targetType:"toy",items:[{e:"🧸",t:"toy"},{e:"🚗",t:"toy"},{e:"🍎",t:"fruit"},{e:"🎈",t:"toy"},{e:"🍌",t:"fruit"},{e:"🌸",t:"flower"}]},
-  {title:"Покажи зверька",targetType:"animal",items:[{e:"🐱",t:"animal"},{e:"🐶",t:"animal"},{e:"🍎",t:"fruit"},{e:"🚗",t:"toy"},{e:"🐰",t:"animal"},{e:"⭐",t:"star"}]}
+  {title:"Собери все фрукты",targetType:"fruit",basket:"🧺",items:[{e:"🍎",t:"fruit"},{e:"🍌",t:"fruit"},{e:"🍐",t:"fruit"},{e:"🧸",t:"toy"},{e:"🚗",t:"toy"},{e:"⚽",t:"toy"}]},
+  {title:"Собери все игрушки",targetType:"toy",basket:"📦",items:[{e:"🧸",t:"toy"},{e:"🚗",t:"toy"},{e:"🎈",t:"toy"},{e:"🍎",t:"fruit"},{e:"🍌",t:"fruit"},{e:"🌸",t:"flower"}]},
+  {title:"Собери всех зверят",targetType:"animal",basket:"🌳",items:[{e:"🐱",t:"animal"},{e:"🐶",t:"animal"},{e:"🐰",t:"animal"},{e:"🍎",t:"fruit"},{e:"🚗",t:"toy"},{e:"⭐",t:"star"}]}
 ];
-const farmAnimals = [
-  {key:"cow",name:"коровку",sound:"Му-у!",x:30,y:51,w:16,h:17},
-  {key:"horse",name:"лошадку",sound:"И-го-го!",x:48,y:51,w:14,h:17},
-  {key:"pig",name:"свинку",sound:"Хрю-хрю!",x:67,y:51,w:15,h:14},
-  {key:"sheep",name:"овечку",sound:"Бе-е!",x:82,y:49,w:17,h:15},
-  {key:"rooster",name:"петушка",sound:"Ку-ка-ре-ку!",x:65,y:71,w:12,h:14},
-  {key:"chick",name:"цыплёнка",sound:"Пи-пи!",x:83,y:66,w:14,h:13}
-];
+
+const farmAnimals = {
+  cow:{name:"Корова",acc:"корову",say:"Му-у",food:"травку",gives:"молоко",x:38,y:47,w:28,h:22},
+  horse:{name:"Лошадка",acc:"лошадку",say:"И-го-го",food:"сено",gives:"быстро бегает",x:13,y:43,w:25,h:22},
+  pig:{name:"Свинка",acc:"свинку",say:"Хрю-хрю",food:"овощи",gives:"любит лужи",x:68,y:48,w:23,h:18},
+  sheep:{name:"Овечка",acc:"овечку",say:"Бе-е",food:"травку",gives:"шерсть",x:70,y:64,w:24,h:19},
+  rooster:{name:"Петушок",acc:"петушка",say:"Ку-ка-ре-ку",food:"зёрнышки",gives:"будит утром",x:58,y:70,w:20,h:18},
+  chick:{name:"Цыплёнок",acc:"цыплёнка",say:"Пи-пи",food:"зёрнышки",gives:"маленький птенец",x:18,y:66,w:16,h:14}
+};
+const farmKeys = Object.keys(farmAnimals);
 
 const menuScreen=document.getElementById("menuScreen"), gameScreen=document.getElementById("gameScreen"), gameTitle=document.getElementById("gameTitle"), taskEl=document.getElementById("task"), gameArea=document.getElementById("gameArea"), messageEl=document.getElementById("message"), bottomRow=document.getElementById("bottomRow"), voiceBtn=document.getElementById("voiceBtn");
 
+farmKeys.forEach(k=>state.farmStates[k]="normal");
+
 function randomItem(a){return a[Math.floor(Math.random()*a.length)]}
 function shuffle(a){return a.sort(()=>Math.random()-.5)}
-function clamp(n){return Math.max(0,Math.min(100,n))}
 function speak(t){if(!state.voice||!("speechSynthesis" in window))return; speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang="ru-RU"; u.rate=.86; u.pitch=1.18; speechSynthesis.speak(u)}
 function beep(kind="ok"){try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;const c=new AC(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=kind==="no"?240:720;g.gain.setValueAtTime(.0001,c.currentTime);g.gain.exponentialRampToValueAtTime(.07,c.currentTime+.02);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.18);o.start();o.stop(c.currentTime+.2)}catch(e){}}
 function setTask(t){state.task=t; taskEl.textContent=t; setTimeout(()=>speak(t),130)}
@@ -205,7 +241,7 @@ function showMsg(t){messageEl.textContent=t; messageEl.classList.add("show")}
 function hideMsg(){messageEl.classList.remove("show")}
 function openGame(g){state.game=g; gameTitle.textContent=titles[g]; menuScreen.classList.remove("active"); gameScreen.classList.add("active"); newRound()}
 function goMenu(){if("speechSynthesis" in window)speechSynthesis.cancel(); hideMsg(); gameScreen.classList.remove("active"); menuScreen.classList.add("active"); bottomRow.classList.remove("hidden")}
-function newRound(){hideMsg(); state.answered=false; gameArea.className="game-area"; bottomRow.classList.remove("hidden"); if(state.game==="farm")renderFarmGame(true); if(state.game==="colorShape")renderColorShape(); if(state.game==="pictureFind")renderPictureFind(); if(state.game==="animalSound")renderAnimalSound(); if(state.game==="feedAnimal")renderFeedAnimal(); if(state.game==="sortBasket")renderSortBasket()}
+function newRound(){hideMsg(); state.answered=false; gameArea.className="game-area"; bottomRow.classList.remove("hidden"); if(state.game==="farm")renderFarm(true); if(state.game==="colorShape")renderColorShape(); if(state.game==="pictureFind")renderPictureFind(); if(state.game==="animalSound")renderAnimalSound(); if(state.game==="feedAnimal")renderFeedAnimal(); if(state.game==="sortBasket")renderSortBasket()}
 function makeChoice(content,onClick,label=""){const b=document.createElement("button");b.className="choice";b.type="button";if(label)b.ariaLabel=label;b.appendChild(content);b.onclick=e=>onClick(b,e);return b}
 function emojiEl(e,big=true){const d=document.createElement("div");d.className=big?"emoji big":"emoji";d.textContent=e;return d}
 function createShape(item){const w=document.createElement("div");w.className="shape-wrap";if(item.kind==="emoji"){const el=document.createElement("div");el.className=item.shape;el.textContent=item.symbol;el.style.color=colorHex[item.color];w.appendChild(el);return w}const s=document.createElement("div");s.className=`shape ${item.shape} ${item.color}`;w.appendChild(s);return w}
@@ -214,86 +250,117 @@ function handleAnswer(ok,el,e){if(state.answered)return;if(ok){state.answered=tr
 
 function renderColorShape(){const target=shapeOption(randomItem(colors),randomItem(shapes));state.target=target;setTask(`Найди ${target.colorName} ${target.shapeAcc}`);const options=[target];while(options.length<4){const o=shapeOption(randomItem(colors),randomItem(shapes));if(!options.some(x=>x.color===o.color&&x.shape===o.shape))options.push(o)}gameArea.innerHTML="";const grid=document.createElement("div");grid.className="grid2";shuffle(options).forEach(o=>grid.appendChild(makeChoice(createShape(o),(card,e)=>handleAnswer(o.color===state.target.color&&o.shape===state.target.shape,card,e),o.shapeName)));gameArea.appendChild(grid)}
 function renderPictureFind(){const target=randomItem(pictureItems);state.target=target;setTask(`Найди ${target.name}`);let options=[target];while(options.length<6){const i=randomItem(pictureItems);if(!options.includes(i))options.push(i)}gameArea.innerHTML="";const grid=document.createElement("div");grid.className="grid3";shuffle(options).forEach(i=>grid.appendChild(makeChoice(emojiEl(i.emoji,false),(card,e)=>handleAnswer(i===state.target,card,e),i.name)));gameArea.appendChild(grid)}
-function renderAnimalSound(){const target=randomItem(animalsBasic);state.target=target;setTask(`Кто говорит «${target.sound}»?`);let options=[target];while(options.length<4){const a=randomItem(animalsBasic);if(!options.includes(a))options.push(a)}gameArea.innerHTML="";const grid=document.createElement("div");grid.className="grid2";shuffle(options).forEach(a=>grid.appendChild(makeChoice(emojiEl(a.emoji),(card,e)=>handleAnswer(a===state.target,card,e),a.name)));gameArea.appendChild(grid)}
+function renderAnimalSound(){const target=randomItem(animalsBasic);state.target=target;setTask(target.question);let options=[target];while(options.length<4){const a=randomItem(animalsBasic);if(!options.includes(a))options.push(a)}gameArea.innerHTML="";const grid=document.createElement("div");grid.className="grid2";shuffle(options).forEach(a=>grid.appendChild(makeChoice(emojiEl(a.emoji),(card,e)=>handleAnswer(a===state.target,card,e),a.name)));gameArea.appendChild(grid)}
 function renderFeedAnimal(){const set=randomItem(feedSets);state.target=set;setTask(`Дай ${set.name} ${set.foodName}`);gameArea.innerHTML="";const scene=document.createElement("div");scene.style.display="grid";scene.style.gap="10px";const animal=document.createElement("div");animal.className="choice";animal.style.minHeight="145px";animal.innerHTML=`<div class="emoji big" style="font-size:92px">${set.animal}</div>`;const row=document.createElement("div");row.className="grid3";shuffle([...set.options]).forEach(food=>{const b=document.createElement("button");b.className="choice";b.type="button";b.style.minHeight="98px";b.innerHTML=`<div class="emoji">${food}</div>`;b.onclick=e=>handleAnswer(food===set.food,b,e);row.appendChild(b)});scene.appendChild(animal);scene.appendChild(row);gameArea.appendChild(scene)}
-function renderSortBasket(){const set=randomItem(sortSets);state.target=set.targetType;setTask(set.title);gameArea.innerHTML="";const grid=document.createElement("div");grid.className="grid3";shuffle([...set.items]).forEach(i=>grid.appendChild(makeChoice(emojiEl(i.e,false),(card,e)=>handleAnswer(i.t===state.target,card,e))));gameArea.appendChild(grid)}
+function renderSortBasket(){const set=randomItem(sortSets);state.target={type:set.targetType,left:set.items.filter(i=>i.t===set.targetType).length};setTask(set.title);gameArea.innerHTML="";const wrap=document.createElement("div");wrap.className="collect-wrap";const basket=document.createElement("div");basket.className="collect-basket";basket.textContent=set.basket;const grid=document.createElement("div");grid.className="grid3";shuffle([...set.items]).forEach(i=>{const btn=makeChoice(emojiEl(i.e,false),(card,e)=>{if(card.classList.contains("collected"))return;if(i.t===state.target.type){card.classList.add("collected");state.target.left--;showMsg(state.target.left>0?"В корзинку! 💛":"Всё собрали! ⭐");beep();speak(state.target.left>0?"В корзинку!":"Всё собрали!");spark(e.clientX||innerWidth/2,e.clientY||innerHeight/2);if(state.target.left<=0)setTimeout(newRound,1100)}else{card.classList.add("wrong");showMsg("Это не сюда 💛");beep("no");speak("Это не сюда");setTimeout(()=>card.classList.remove("wrong"),350)}});grid.appendChild(btn)});wrap.appendChild(basket);wrap.appendChild(grid);gameArea.appendChild(wrap)}
 
-function renderFarmGame(newTask=false){
-  gameArea.className="game-area";
+function renderFarm(newTask=false){
+  gameArea.className="game-area farm-game";
   bottomRow.classList.add("hidden");
   if(newTask){
-    const a=randomItem(farmAnimals);
-    state.target=a.key;
-    const q=randomItem([`Найди ${a.name}`,`Погладь ${a.name}`,`Покорми ${a.name}`]);
-    setTask(q);
+    const k=randomItem(farmKeys);
+    state.target=k;
+    const a=farmAnimals[k];
+    setTask(randomItem([`Найди ${a.acc}`,`Погладь ${a.acc}`,`Кто говорит ${a.say}?`]));
   }
+  const a=farmAnimals[state.selected];
   gameArea.innerHTML = `
-    <div class="farm-card" id="farmCard">
-      <img class="farm-img" src="farm_sheet.jpg" alt="Ферма">
-      <div class="farm-overlay" id="farmOverlay"></div>
+    <div class="farm-scene" id="farmScene">
+      <img class="farm-bg" src="assets/farm_bg.png" alt="Ферма">
+      <div class="farm-bubble" id="farmBubble">Нажми на животное</div>
     </div>
-    <div class="stats">
-      <div class="stat">Сытые<div class="bar"><div class="fill" id="foodBar"></div></div></div>
-      <div class="stat">Весёлые<div class="bar"><div class="fill" id="joyBar"></div></div></div>
-      <div class="stat">Чистые<div class="bar"><div class="fill" id="cleanBar"></div></div></div>
+    <div class="info-card">
+      <div class="portrait" id="portrait"></div>
+      <div>
+        <div class="info-title" id="infoTitle">${a.name}</div>
+        <div class="info-lines" id="infoLines">
+          💬 Говорит: <b>${a.say}</b><br>
+          🌿 Ест: <b>${a.food}</b><br>
+          🎁 Даёт: <b>${a.gives}</b>
+        </div>
+      </div>
     </div>
-    <div class="actions">
-      <button class="act" onclick="farmAction('feed')">🌾<span class="cap">корм</span></button>
-      <button class="act" onclick="farmAction('play')">🎈<span class="cap">игра</span></button>
-      <button class="act" onclick="farmAction('wash')">🫧<span class="cap">мыть</span></button>
-      <button class="act" onclick="farmQuestion()">✨<span class="cap">задание</span></button>
-    </div>`;
-  const overlay=document.getElementById("farmOverlay");
-  farmAnimals.forEach(a=>{
-    const b=document.createElement("button");
-    b.className="hotspot";
-    b.style.left=a.x+"%"; b.style.top=a.y+"%"; b.style.width=a.w+"%"; b.style.height=a.h+"%";
-    b.onclick=e=>farmTap(a,e);
-    overlay.appendChild(b);
-  });
-  updateBars();
-  showMsg("Нажми на животное 💛");
+    <div class="farm-actions">
+      <button class="farm-action" onclick="farmAction('eat')">🌿<span>Кормить</span></button>
+      <button class="farm-action" onclick="farmAction('happy')">🎈<span>Играть</span></button>
+      <button class="farm-action" onclick="farmAction('sleep')">🌙<span>Спать</span></button>
+      <button class="farm-action" onclick="listenAnimal()">🔊<span>Слушать</span></button>
+    </div>
+  `;
+  placeAnimals();
+  updateInfo();
 }
-function farmTap(a,e){
-  state.selected=a.key;
-  const ok = !state.target || state.target===a.key;
+function placeAnimals(){
+  const scene=document.getElementById("farmScene");
+  farmKeys.forEach(k=>{
+    const a=farmAnimals[k];
+    const btn=document.createElement("button");
+    btn.className="animal-sprite"+(k===state.selected?" selected":"")+(state.farmStates[k]==="sleep"?" sleep":"");
+    btn.style.left=a.x+"%"; btn.style.top=a.y+"%"; btn.style.width=a.w+"%"; btn.style.height=a.h+"%";
+    btn.style.backgroundImage=`url(assets/${k}_${state.farmStates[k]}.png)`;
+    btn.onclick=e=>selectAnimal(k,e);
+    scene.appendChild(btn);
+  });
+}
+function selectAnimal(k,e){
+  state.selected=k;
+  const ok=!state.target || state.target===k;
   if(ok){
-    showMsg(a.sound);
-    speak(a.sound);
+    const a=farmAnimals[k];
+    showMsg(a.say);
+    speak(a.say);
     beep();
     popFarm(e.clientX,e.clientY,"💛");
-    if(state.target){ setTimeout(farmQuestion,900); }
+    const el=e.currentTarget; el.classList.add("happy"); setTimeout(()=>el.classList.remove("happy"),600);
+    if(state.target) setTimeout(()=>{state.target=null; renderFarm(true)},900);
   } else {
     showMsg("Попробуй ещё 💛");
     speak("Попробуй ещё");
     beep("no");
-    e.currentTarget.classList.add("show");
-    setTimeout(()=>e.currentTarget.classList.remove("show"),450);
   }
+  updateInfo();
+  renderFarm(false);
 }
-function farmQuestion(){
-  const a=randomItem(farmAnimals);
-  state.target=a.key;
-  setTask(randomItem([`Найди ${a.name}`,`Погладь ${a.name}`,`Покорми ${a.name}`]));
+function updateInfo(){
+  const a=farmAnimals[state.selected];
+  const p=document.getElementById("portrait");
+  if(p) p.style.backgroundImage=`url(assets/${state.selected}_normal.png)`;
+  const title=document.getElementById("infoTitle");
+  const lines=document.getElementById("infoLines");
+  if(title) title.textContent=a.name;
+  if(lines) lines.innerHTML=`💬 Говорит: <b>${a.say}</b><br>🌿 Ест: <b>${a.food}</b><br>🎁 Даёт: <b>${a.gives}</b>`;
 }
 function farmAction(action){
-  const a=farmAnimals.find(x=>x.key===state.selected) || randomItem(farmAnimals);
-  let text="",icon="💛";
-  if(action==="feed"){state.food=clamp(state.food+16);text=`Покормили ${a.name}`;icon="🌾"}
-  if(action==="play"){state.joy=clamp(state.joy+18);state.food=clamp(state.food-4);text=`${a.name} играет`;icon="🎈"}
-  if(action==="wash"){state.clean=clamp(state.clean+18);text=`${a.name} чистенькая`;icon="🫧"}
-  setTask(text);showMsg(text);beep();updateBars();popFarm(innerWidth/2,innerHeight/2,icon);
+  state.farmStates[state.selected]=action;
+  const a=farmAnimals[state.selected];
+  let text = action==="eat" ? `${a.name} ест` : action==="happy" ? `${a.name} радуется` : `${a.name} спит`;
+  let icon = action==="eat" ? "🌿" : action==="happy" ? "🎈" : "💤";
+  setTask(text);
+  showMsg(text);
+  speak(text);
+  beep();
+  renderFarm(false);
+  const scene=document.getElementById("farmScene");
+  if(scene) popFarm(innerWidth/2, innerHeight/2, icon);
+  if(action!=="normal"){
+    setTimeout(()=>{ if(state.game==="farm"){ state.farmStates[state.selected]="normal"; renderFarm(false); } }, 2600);
+  }
 }
-function updateBars(){
-  const f=document.getElementById("foodBar"),j=document.getElementById("joyBar"),c=document.getElementById("cleanBar");
-  if(!f)return;
-  f.style.cssText=`width:${state.food}%;background:linear-gradient(90deg,#ffb05c,#ffd85d)`;
-  j.style.cssText=`width:${state.joy}%;background:linear-gradient(90deg,#80d8ff,#5fb6ff)`;
-  c.style.cssText=`width:${state.clean}%;background:linear-gradient(90deg,#91e7a0,#66d488)`;
+function listenAnimal(){
+  const a=farmAnimals[state.selected];
+  setTask(`${a.name} говорит ${a.say}`);
+  showMsg(a.say);
+  speak(a.say);
+  beep();
 }
-function popFarm(x,y,symbol){const card=document.getElementById("farmCard");if(!card)return;const r=card.getBoundingClientRect();const b=document.createElement("div");b.className="bubble";b.textContent=symbol;b.style.left=(x-r.left)+"px";b.style.top=(y-r.top)+"px";card.appendChild(b);setTimeout(()=>b.remove(),1000)}
+function popFarm(x,y,symbol){
+  const scene=document.getElementById("farmScene"); if(!scene)return;
+  const r=scene.getBoundingClientRect();
+  const b=document.createElement("div"); b.className="spark"; b.textContent=symbol;
+  b.style.left=(x-r.left)+"px"; b.style.top=(y-r.top)+"px";
+  scene.appendChild(b); setTimeout(()=>b.remove(),950);
+}
 function spark(x,y){["⭐","✨","🌟","💛","🎉","🌸"].forEach(s=>{const d=document.createElement("div");d.className="spark";d.textContent=s;d.style.left=(x+Math.random()*90-45)+"px";d.style.top=(y+Math.random()*40-20)+"px";d.style.animationDelay=(Math.random()*.12)+"s";document.body.appendChild(d);setTimeout(()=>d.remove(),950)})}
-setInterval(()=>{if(state.game!=="farm")return;state.food=clamp(state.food-1);state.joy=clamp(state.joy-.6);state.clean=clamp(state.clean-.5);updateBars()},5000);
 </script>
 </body>
 </html>
