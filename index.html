@@ -74,15 +74,15 @@ h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:20px;text-align
   justify-items:stretch;
   display:grid;
   grid-template-columns:1fr;
-  grid-template-rows:minmax(245px, 1fr) auto auto;
-  gap:7px;
+  grid-template-rows:minmax(390px, 1fr) auto;
+  gap:8px;
 }
 .farm-scene{
   position:relative;
   width:100%;
   height:100%;
-  min-height:245px;
-  max-height:50dvh;
+  min-height:390px;
+  max-height:68dvh;
   border-radius:28px;
   overflow:hidden;
   border:3px solid rgba(255,255,255,.95);
@@ -123,6 +123,19 @@ h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:20px;text-align
   text-align:center;
 }
 
+
+.selected-chip{
+  position:absolute;
+  left:10px;
+  bottom:10px;
+  z-index:22;
+  padding:8px 12px;
+  border-radius:18px;
+  background:rgba(255,255,255,.9);
+  box-shadow:0 8px 14px var(--shadow);
+  font-size:15px;
+  font-weight:900;
+}
 .object-hotspot{position:absolute;border:0;background:transparent;padding:0;z-index:3;border-radius:18px}
 .object-hotspot:active{transform:scale(.98)}
 .info-card{
@@ -148,14 +161,14 @@ h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:20px;text-align
   width:100%;
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:7px;
+  gap:8px;
   padding-bottom:max(4px, env(safe-area-inset-bottom));
 }
 .farm-action{
-  min-height:52px;border:0;border-radius:18px;background:#fff;box-shadow:0 6px 0 rgba(130,86,25,.18),0 10px 16px var(--shadow);
-  font-size:21px;font-weight:900
+  min-height:58px;border:0;border-radius:20px;background:#fff;box-shadow:0 6px 0 rgba(130,86,25,.18),0 10px 16px var(--shadow);
+  font-size:22px;font-weight:900
 }
-.farm-action span{display:block;font-size:9px;color:var(--muted);margin-top:1px}
+.farm-action span{display:block;font-size:10px;color:var(--muted);margin-top:1px}
 .collect-wrap{display:grid;gap:10px}
 .collect-basket{
   min-height:82px;border-radius:28px;background:rgba(255,255,255,.9);
@@ -169,7 +182,7 @@ h1,h2{margin:0;line-height:1.08} h1{font-size:26px} h2{font-size:20px;text-align
   .menu-card{min-height:72px;grid-template-columns:50px 1fr}.menu-icon{width:50px;height:50px;font-size:28px}.menu-title{font-size:16px}.menu-desc{font-size:12px}
   .task{font-size:16px;padding:7px}.choice{min-height:88px}.emoji{font-size:47px}.emoji.big{font-size:64px}.shape-wrap{transform:scale(.74)}
   .message{font-size:15px;min-height:34px;padding:6px 9px}
-  .farm-action{min-height:52px;font-size:21px;border-radius:18px}.farm-action span{font-size:9px}
+  .farm-action{min-height:52px;font-size:20px;border-radius:18px}.farm-action span{font-size:9px}
   .info-card{grid-template-columns:58px 1fr;padding:7px}.portrait{width:58px;height:58px}.info-title{font-size:20px}.info-lines{font-size:13px}
   .farm-bubble{font-size:14px;padding:6px 9px}
 }
@@ -242,8 +255,8 @@ const farmAnimals = {
   horse:{name:"Лошадка",acc:"лошадку",say:"И-го-го",food:"сено",gives:"быстро бегает",x:13,y:43,w:25,h:22},
   pig:{name:"Свинка",acc:"свинку",say:"Хрю-хрю",food:"овощи",gives:"любит лужи",x:68,y:48,w:23,h:18},
   sheep:{name:"Овечка",acc:"овечку",say:"Бе-е",food:"травку",gives:"шерсть",x:72,y:64,w:23,h:19},
-  rooster:{name:"Петушок",acc:"петушка",say:"Ку-ка-ре-ку",food:"зёрнышки",gives:"будит утром",x:54,y:72,w:19,h:17},
-  chick:{name:"Цыплёнок",acc:"цыплёнка",say:"Пи-пи",food:"зёрнышки",gives:"маленький птенец",x:18,y:66,w:16,h:14}
+  rooster:{name:"Петушок",acc:"петушка",say:"Ку-ка-ре-ку",food:"зёрнышки",gives:"будит утром",x:51,y:73,w:18,h:16},
+  chick:{name:"Цыплёнок",acc:"цыплёнка",say:"Пи-пи",food:"зёрнышки",gives:"маленький птенец",x:16,y:67,w:15,h:13}
 };
 const farmKeys = Object.keys(farmAnimals);
 const farmObjects = {
@@ -296,28 +309,17 @@ function renderFarm(newTask=false){
     <div class="farm-scene" id="farmScene">
       <img class="farm-bg" src="farm_bg.png" alt="Ферма">
       <div class="farm-bubble" id="farmBubble">Нажми на зверька</div>
-    </div>
-    <div class="info-card">
-      <div class="portrait" id="portrait"></div>
-      <div>
-        <div class="info-title" id="infoTitle">${a.name}</div>
-        <div class="info-lines" id="infoLines">
-          💬 Говорит: <b>${a.say}</b><br>
-          🌿 Ест: <b>${a.food}</b><br>
-          🎁 Даёт: <b>${a.gives}</b>
-        </div>
-      </div>
+      <div class="selected-chip" id="selectedChip">${a.name}</div>
     </div>
     <div class="farm-actions">
+      <button class="farm-action" onclick="farmAction('normal')">☀️<span>Обычное</span></button>
       <button class="farm-action" onclick="farmAction('eat')">🌿<span>Кормить</span></button>
       <button class="farm-action" onclick="farmAction('happy')">🎈<span>Играть</span></button>
       <button class="farm-action" onclick="farmAction('sleep')">🌙<span>Спать</span></button>
-      <button class="farm-action" onclick="newFarmTask()">❓<span>Задание</span></button>
     </div>
   `;
   placeAnimals();
   placeObjects();
-  updateInfo();
 }
 function placeAnimals(){
   const scene=document.getElementById("farmScene");
@@ -361,13 +363,13 @@ function selectAnimal(k,e){
   const a=farmAnimals[k];
   const ok=!state.target || state.target===k;
   if(ok){
-    showMsg(ok && state.target ? `Да, это ${a.name.toLowerCase()}!` : a.say);
+    showMsg(state.target ? `Да, это ${a.name.toLowerCase()}!` : a.say);
     speak(a.say);
     beep();
     popFarm(e.clientX,e.clientY,"💛");
-    const el=e.currentTarget; el.classList.add("happy"); setTimeout(()=>el.classList.remove("happy"),600);
     if(state.target===k){
       state.target=null;
+      setTimeout(()=>{ if(state.game==="farm") newFarmTask(); }, 1000);
     }
   } else {
     showMsg("Попробуй ещё 💛");
@@ -376,20 +378,20 @@ function selectAnimal(k,e){
   }
   renderFarm(false);
 }
-function updateInfo(){
-  const a=farmAnimals[state.selected];
-  const p=document.getElementById("portrait");
-  if(p) p.style.backgroundImage=`url(${state.selected}_normal.png)`;
-  const title=document.getElementById("infoTitle");
-  const lines=document.getElementById("infoLines");
-  if(title) title.textContent=a.name;
-  if(lines) lines.innerHTML=`💬 Говорит: <b>${a.say}</b><br>🌿 Ест: <b>${a.food}</b><br>🎁 Даёт: <b>${a.gives}</b>`;
-}
+function updateInfo(){}
 function farmAction(action){
   state.farmStates[state.selected]=action;
   const a=farmAnimals[state.selected];
-  let text = action==="eat" ? `${a.name} ест` : action==="happy" ? `${a.name} играет` : `${a.name} спит`;
-  let icon = action==="eat" ? "🌿" : action==="happy" ? "🎈" : "💤";
+  let text =
+    action==="normal" ? `${a.name}: обычное состояние` :
+    action==="eat" ? `${a.name} ест` :
+    action==="happy" ? `${a.name} играет` :
+    `${a.name} спит`;
+  let icon =
+    action==="normal" ? "☀️" :
+    action==="eat" ? "🌿" :
+    action==="happy" ? "🎈" :
+    "💤";
   showMsg(text);
   speak(text);
   beep();
